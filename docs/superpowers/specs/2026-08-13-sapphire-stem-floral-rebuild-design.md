@@ -177,11 +177,24 @@ Known items from the current site, to be confirmed against the live page:
 - **Ceremony:** aisle marker, arch accent flowers, pedestal arrangement, meadow semi circle, full arch
 - **Reception:** bud vases, petite centerpiece, signature centerpiece, long and low centerpiece, bar arrangement, table garland, cake flowers
 
-**Open item:** price values could not be reliably mapped to individual items from
-the Canva document extraction — the document contains a flat set of dollar
-amounts spanning the à la carte menu, the Valentine's page, and the Prom page.
-Item-to-price mapping must be read off the rendered live page before launch and
-confirmed with Beka.
+Prices recovered from the Canva document via element-position mapping
+(items and "Starting at" values pair by column offset):
+
+| Personals | | Ceremony | | Reception | |
+|---|---|---|---|---|---|
+| Bridal bouquet | $250 | Aisle marker | $250 | Bud vases | $10 |
+| Boutonniere | $25 | Arch accent flowers | $350 | Petite centerpiece | $50 |
+| Pocket square | $35 | Pedestal arrangement | $500 | Signature centerpiece | $175 |
+| Corsages | $45 | Meadow semi circle | $1,500 | Long & low centerpiece | $250 |
+| Bridesmaid bouquet | $75 | Full arch | $2,500 | Bar arrangement | $300 |
+| | | | | Table garland | $40 |
+| | | | | Cake flowers | $40 |
+
+Policy copy, verbatim from the live page: $100 order minimum; delivery and
+setup offered for floral totals of $2,000+, starting at $500 plus mileage;
+50% non-refundable retainer to reserve a date; full service weddings begin
+at $4,000. Beka confirms the table before launch (in particular whether
+table garland is priced per foot).
 
 **Exposed in Decap.**
 
@@ -414,7 +427,7 @@ Every page terminates in exactly one call to action.
 
 | Item | Owner | Blocking |
 |---|---|---|
-| Which phone number is correct | Beka | Launch |
-| À la carte item-to-price mapping | Developer reads live page, Beka confirms | Launch |
+| Confirm phone number | Beka | Launch. (406) 219-1116 is the site-footer number on Weddings and Contact; (808) 741-3035 appeared only on the dropped Prom page. Build uses the 406 number pending confirmation |
+| Confirm à la carte prices (§4 table) | Beka | Launch |
 | Google Business Profile access for NAP alignment | Beka | Post-launch |
 | DecapBridge account and site registration | Developer | CMS handoff |
