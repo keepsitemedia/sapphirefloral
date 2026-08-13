@@ -1,0 +1,697 @@
+<title>Sapphire Stem on Google</title>
+
+<style>
+  :root {
+    --ground: #f4f6f8;
+    --surface: #ffffff;
+    --surface-2: #eef1f5;
+    --ink: #16212c;
+    --ink-soft: #3c4a58;
+    --muted: #63707e;
+    --line: #d8dee6;
+    --line-soft: #e6ebf0;
+    --accent: #3e63a0;
+    --accent-soft: #e7edf7;
+    --stem: #5f7752;
+    --stem-soft: #e9eee5;
+    --warn: #9c4a37;
+    --warn-soft: #f7ece9;
+
+    --display: "Iowan Old Style", "Palatino Linotype", "Book Antiqua", Palatino, "Hoefler Text", Georgia, serif;
+    --body: "Seravek", "Gill Sans Nova", "Segoe UI", Ubuntu, Calibri, system-ui, sans-serif;
+    --mono: ui-monospace, "SF Mono", SFMono-Regular, Menlo, Consolas, monospace;
+
+    --measure: 68ch;
+    --s1: 0.4rem;
+    --s2: 0.75rem;
+    --s3: 1.15rem;
+    --s4: 1.8rem;
+    --s5: 2.8rem;
+    --s6: 4.2rem;
+  }
+
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --ground: #121a23;
+      --surface: #1a242f;
+      --surface-2: #202c38;
+      --ink: #e3e9f0;
+      --ink-soft: #c2cdd9;
+      --muted: #8d9aa8;
+      --line: #31404f;
+      --line-soft: #26323e;
+      --accent: #8fafdc;
+      --accent-soft: #1e2b3d;
+      --stem: #9db48c;
+      --stem-soft: #1e2820;
+      --warn: #d08a76;
+      --warn-soft: #2e211d;
+    }
+  }
+
+  :root[data-theme="dark"] {
+    --ground: #121a23;
+    --surface: #1a242f;
+    --surface-2: #202c38;
+    --ink: #e3e9f0;
+    --ink-soft: #c2cdd9;
+    --muted: #8d9aa8;
+    --line: #31404f;
+    --line-soft: #26323e;
+    --accent: #8fafdc;
+    --accent-soft: #1e2b3d;
+    --stem: #9db48c;
+    --stem-soft: #1e2820;
+    --warn: #d08a76;
+    --warn-soft: #2e211d;
+  }
+
+  * { box-sizing: border-box; }
+
+  body {
+    background: var(--ground);
+    color: var(--ink);
+    font-family: var(--body);
+    font-size: 1.0625rem;
+    line-height: 1.65;
+    -webkit-font-smoothing: antialiased;
+    padding: var(--s5) var(--s3) var(--s6);
+  }
+
+  .page {
+    max-width: var(--measure);
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    gap: var(--s5);
+  }
+
+  /* ---------- masthead ---------- */
+
+  .masthead {
+    display: flex;
+    flex-direction: column;
+    gap: var(--s3);
+    padding-bottom: var(--s4);
+    border-bottom: 2px solid var(--ink);
+  }
+
+  .eyebrow {
+    font-family: var(--mono);
+    font-size: 0.7rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin: 0;
+  }
+
+  h1 {
+    font-family: var(--display);
+    font-size: clamp(2.1rem, 6vw, 3.1rem);
+    line-height: 1.08;
+    font-weight: 400;
+    letter-spacing: -0.015em;
+    text-wrap: balance;
+    margin: 0;
+  }
+
+  .standfirst {
+    font-size: 1.15rem;
+    color: var(--ink-soft);
+    margin: 0;
+    max-width: 58ch;
+  }
+
+  .progress {
+    font-family: var(--mono);
+    font-size: 0.78rem;
+    letter-spacing: 0.06em;
+    color: var(--muted);
+    margin: 0;
+  }
+
+  .progress b { color: var(--stem); font-weight: 600; }
+
+  /* ---------- start-here callout ---------- */
+
+  .callout {
+    background: var(--accent-soft);
+    border-left: 3px solid var(--accent);
+    padding: var(--s3) var(--s4);
+    display: flex;
+    flex-direction: column;
+    gap: var(--s2);
+  }
+
+  .callout h2 {
+    font-family: var(--mono);
+    font-size: 0.72rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--accent);
+    font-weight: 600;
+    margin: 0;
+  }
+
+  .callout p { margin: 0; }
+  .callout p + p { color: var(--ink-soft); font-size: 0.98rem; }
+
+  /* ---------- cadence sections ---------- */
+
+  .cadence {
+    display: flex;
+    flex-direction: column;
+    gap: var(--s3);
+    border-left: 2px solid var(--line);
+    padding-left: var(--s4);
+  }
+
+  .cadence.is-warn { border-left-color: var(--warn); }
+
+  .cadence-head {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    gap: var(--s2) var(--s3);
+    margin-left: calc(-1 * var(--s4) - 2px);
+    padding-left: var(--s4);
+    border-left: 2px solid var(--accent);
+  }
+
+  .cadence.is-warn .cadence-head { border-left-color: var(--warn); }
+
+  .cadence-head h2 {
+    font-family: var(--display);
+    font-size: 1.65rem;
+    font-weight: 400;
+    line-height: 1.15;
+    margin: 0;
+    letter-spacing: -0.01em;
+  }
+
+  .cost {
+    font-family: var(--mono);
+    font-size: 0.72rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--muted);
+    border: 1px solid var(--line);
+    border-radius: 2px;
+    padding: 0.15rem 0.5rem;
+    white-space: nowrap;
+  }
+
+  .cadence > p {
+    margin: 0;
+    color: var(--ink-soft);
+    max-width: 58ch;
+  }
+
+  /* ---------- tasks ---------- */
+
+  .tasks {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .task {
+    display: grid;
+    grid-template-columns: 1.4rem 1fr;
+    gap: var(--s2);
+    align-items: start;
+    padding: var(--s3) 0;
+    border-top: 1px solid var(--line-soft);
+  }
+
+  .task:first-child { border-top: none; padding-top: var(--s1); }
+
+  .task input {
+    appearance: none;
+    -webkit-appearance: none;
+    width: 1.05rem;
+    height: 1.05rem;
+    margin: 0.32rem 0 0 0;
+    border: 1.5px solid var(--muted);
+    border-radius: 2px;
+    background: var(--surface);
+    cursor: pointer;
+    display: grid;
+    place-content: center;
+    flex: none;
+  }
+
+  .task input::after {
+    content: "";
+    width: 0.5rem;
+    height: 0.28rem;
+    border-left: 2px solid var(--surface);
+    border-bottom: 2px solid var(--surface);
+    transform: rotate(-45deg) scale(0);
+    transition: transform 120ms ease;
+  }
+
+  .task input:checked {
+    background: var(--stem);
+    border-color: var(--stem);
+  }
+
+  .task input:checked::after { transform: rotate(-45deg) scale(1); }
+
+  .task input:focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 2px;
+  }
+
+  .task label { cursor: pointer; display: block; }
+
+  .task-title {
+    display: block;
+    font-weight: 600;
+    color: var(--ink);
+    line-height: 1.45;
+  }
+
+  .task-note {
+    display: block;
+    color: var(--muted);
+    font-size: 0.95rem;
+    margin-top: 0.15rem;
+  }
+
+  .task input:checked ~ label .task-title {
+    text-decoration: line-through;
+    text-decoration-color: var(--muted);
+    color: var(--muted);
+    font-weight: 500;
+  }
+
+  .task input:checked ~ label .task-note { opacity: 0.6; }
+
+  .path {
+    font-family: var(--mono);
+    font-size: 0.85em;
+    background: var(--surface-2);
+    border: 1px solid var(--line-soft);
+    border-radius: 2px;
+    padding: 0.05em 0.35em;
+    white-space: nowrap;
+    color: var(--ink-soft);
+  }
+
+  /* ---------- copy blocks ---------- */
+
+  .copyblock {
+    background: var(--surface);
+    border: 1px solid var(--line);
+    display: flex;
+    flex-direction: column;
+  }
+
+  .copyblock-head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--s2);
+    padding: var(--s2) var(--s3);
+    border-bottom: 1px solid var(--line-soft);
+    background: var(--surface-2);
+  }
+
+  .copyblock-head span {
+    font-family: var(--mono);
+    font-size: 0.7rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+
+  .copybtn {
+    font-family: var(--mono);
+    font-size: 0.7rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--accent);
+    background: transparent;
+    border: 1px solid var(--accent);
+    border-radius: 2px;
+    padding: 0.22rem 0.6rem;
+    cursor: pointer;
+    transition: background 120ms ease, color 120ms ease;
+  }
+
+  .copybtn:hover { background: var(--accent); color: var(--surface); }
+  .copybtn:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+
+  .copyblock p {
+    margin: 0;
+    padding: var(--s3);
+    color: var(--ink-soft);
+    font-size: 0.98rem;
+    line-height: 1.6;
+  }
+
+  .copyblock p + p { padding-top: 0; }
+
+  /* ---------- never list ---------- */
+
+  .nevers {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: var(--s3);
+  }
+
+  .never {
+    background: var(--warn-soft);
+    padding: var(--s3);
+    border-left: 2px solid var(--warn);
+  }
+
+  .never b {
+    display: block;
+    color: var(--warn);
+    font-weight: 600;
+    margin-bottom: 0.15rem;
+  }
+
+  .never span { color: var(--ink-soft); font-size: 0.97rem; }
+
+  /* ---------- footer ---------- */
+
+  .colophon {
+    border-top: 1px solid var(--line);
+    padding-top: var(--s3);
+    color: var(--muted);
+    font-size: 0.92rem;
+  }
+
+  .colophon p { margin: 0 0 var(--s2); max-width: 58ch; }
+  .colophon p:last-child { margin-bottom: 0; }
+
+  a { color: var(--accent); text-underline-offset: 2px; }
+
+  .toast {
+    position: fixed;
+    left: 50%;
+    bottom: 1.5rem;
+    transform: translate(-50%, 1rem);
+    background: var(--ink);
+    color: var(--ground);
+    font-family: var(--mono);
+    font-size: 0.72rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    padding: 0.5rem 0.9rem;
+    border-radius: 2px;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 160ms ease, transform 160ms ease;
+  }
+
+  .toast.show { opacity: 1; transform: translate(-50%, 0); }
+
+  @media (prefers-reduced-motion: reduce) {
+    * { transition: none !important; animation: none !important; }
+  }
+
+  @media (max-width: 34rem) {
+    body { padding: var(--s4) var(--s3) var(--s5); }
+    .cadence { padding-left: var(--s3); }
+    .cadence-head { margin-left: calc(-1 * var(--s3) - 2px); padding-left: var(--s3); }
+    .callout { padding: var(--s3); }
+  }
+</style>
+
+<div class="page">
+
+  <header class="masthead">
+    <p class="eyebrow">Sapphire Stem Floral Design &middot; Big Timber, MT</p>
+    <h1>Your Google Business Profile</h1>
+    <p class="standfirst">For a wedding florist in a town of 1,600, this profile does more work than the website does. It is what appears when someone in Livingston or Bozeman searches &ldquo;wedding florist near me.&rdquo; Everything below is grouped by how often you need to touch it.</p>
+    <p class="progress"><b id="done">0</b> of <span id="total">0</span> done</p>
+  </header>
+
+  <section class="callout">
+    <h2>Start here</h2>
+    <p>Your website currently shows two different phone numbers: <strong>(406) 219-1116</strong> and <strong>(808) 741-3035</strong>. Google checks whether your number matches everywhere it appears online, and a mismatch quietly holds your ranking down.</p>
+    <p>Pick the one you want couples to call. Tell us which, and we will make the new website match it exactly. Then update it on Google, Instagram, and Facebook the same day.</p>
+  </section>
+
+  <section class="cadence">
+    <div class="cadence-head">
+      <h2>Fix once</h2>
+      <span class="cost">About 30 minutes</span>
+    </div>
+    <p>The settings that decide whether you show up at all. Do these first, in one sitting.</p>
+    <ul class="tasks">
+      <li class="task">
+        <input type="checkbox" id="t1">
+        <label for="t1">
+          <span class="task-title">Claim and verify the profile</span>
+          <span class="task-note">If you have not already, search your business name on Google and choose &ldquo;Claim this business.&rdquo; Nothing else on this list counts until the profile is verified in your own account.</span>
+        </label>
+      </li>
+      <li class="task">
+        <input type="checkbox" id="t2">
+        <label for="t2">
+          <span class="task-title">Set one phone number</span>
+          <span class="task-note">The number you chose above. This exact number, in this exact format, on Google, the website, Instagram, and Facebook.</span>
+        </label>
+      </li>
+      <li class="task">
+        <input type="checkbox" id="t3">
+        <label for="t3">
+          <span class="task-title">Set your primary category</span>
+          <span class="task-note">Under <span class="path">Edit profile &rsaquo; Business category</span>. Type &ldquo;wedding florist&rdquo; first &mdash; if Google offers it, take it, because weddings are your business. If not, choose <strong>Florist</strong>. Your primary category matters more for ranking than every other field combined.</span>
+        </label>
+      </li>
+      <li class="task">
+        <input type="checkbox" id="t4">
+        <label for="t4">
+          <span class="task-title">Add secondary categories</span>
+          <span class="task-note">Search for and add only ones that genuinely fit: wedding service, event florist, flower delivery. Adding categories you do not actually serve can hurt you.</span>
+        </label>
+      </li>
+      <li class="task">
+        <input type="checkbox" id="t5">
+        <label for="t5">
+          <span class="task-title">Set your service area, not a street address</span>
+          <span class="task-note">You work out of a studio and travel to venues, so hide the address and list where you actually go: Big Timber, Livingston, Bozeman, Big Sky, Billings, Butte, Missoula, plus Columbus, Absarokee, Melville and McLeod nearby. Google caps this at 20 areas. Because you travel across the state, also add Sweet Grass, Park, Gallatin, Yellowstone, Silver Bow and Missoula counties.</span>
+        </label>
+      </li>
+      <li class="task">
+        <input type="checkbox" id="t6">
+        <label for="t6">
+          <span class="task-title">Set the opening date to 2025</span>
+          <span class="task-note">Matches &ldquo;Est. 2025&rdquo; on your site. Small field, and it is one more thing Google can confirm about you.</span>
+        </label>
+      </li>
+      <li class="task">
+        <input type="checkbox" id="t7">
+        <label for="t7">
+          <span class="task-title">Paste in your business description</span>
+          <span class="task-note">Written for you below. Google gives you 750 characters and most florists leave it blank.</span>
+        </label>
+      </li>
+      <li class="task">
+        <input type="checkbox" id="t8">
+        <label for="t8">
+          <span class="task-title">Point the website link at sapphirestemfloral.com</span>
+          <span class="task-note">And add your inquiry form as the appointment link, so &ldquo;Book&rdquo; goes straight to it instead of making people hunt.</span>
+        </label>
+      </li>
+      <li class="task">
+        <input type="checkbox" id="t9">
+        <label for="t9">
+          <span class="task-title">Turn on the attributes that apply</span>
+          <span class="task-note">Under <span class="path">Edit profile &rsaquo; More</span>. Woman-owned, appointment required, online estimates &mdash; these show as badges and they are free differentiation.</span>
+        </label>
+      </li>
+    </ul>
+
+    <div class="copyblock">
+      <div class="copyblock-head">
+        <span>Business description &mdash; paste as is</span>
+        <button class="copybtn" data-copy="desc">Copy</button>
+      </div>
+      <p id="desc">Sapphire Stem Floral Design is a wedding and event florist based in Big Timber, Montana. We travel across the state to Bozeman, Big Sky, Livingston, Billings, Butte and Missoula, and throughout Southwest Montana. Founded in 2025 by Beka Greenall, we create environmentally conscious, artful, romantic florals tailored to you and your story. Our designs are foam-free wherever possible, we avoid single-use plastics, and we source blooms locally when they are in season. We offer à la carte wedding flowers — bridal bouquets, boutonnieres, corsages, ceremony arches and reception centerpieces — as well as full-service floral design with custom proposals. We work with a range of budgets. Now booking 2026 and 2027 weddings.</p>
+    </div>
+  </section>
+
+  <section class="cadence">
+    <div class="cadence-head">
+      <h2>Fill in once</h2>
+      <span class="cost">Worth an afternoon</span>
+    </div>
+    <p>Slower, but this is where you pull ahead of every other florist in the county. Most profiles stop after the phone number.</p>
+    <ul class="tasks">
+      <li class="task">
+        <input type="checkbox" id="t10">
+        <label for="t10">
+          <span class="task-title">Add every à la carte item as a Service</span>
+          <span class="task-note">Bridal bouquet, bridesmaid bouquet, boutonniere, pocket square, corsage, aisle marker, arch flowers, pedestal arrangement, full arch, bud vases, centerpieces, bar arrangement, table garland, cake flowers. Each one is a phrase someone might search, and each gets its own description and starting price.</span>
+        </label>
+      </li>
+      <li class="task">
+        <input type="checkbox" id="t11">
+        <label for="t11">
+          <span class="task-title">Upload a logo and a cover photo</span>
+          <span class="task-note">The cover is the first image people see. Use your strongest full-scene wedding photo, not a close-up.</span>
+        </label>
+      </li>
+      <li class="task">
+        <input type="checkbox" id="t12">
+        <label for="t12">
+          <span class="task-title">Upload 10 to 15 of your best photos</span>
+          <span class="task-note">Landscape orientation, well lit, real weddings. Mix wide venue shots with detail shots. Profiles with photos get meaningfully more clicks than profiles without.</span>
+        </label>
+      </li>
+      <li class="task">
+        <input type="checkbox" id="t13">
+        <label for="t13">
+          <span class="task-title">Seed the Questions section yourself</span>
+          <span class="task-note">You are allowed to post questions and answer them. Add the four you actually get asked: How far do you travel? How far ahead should we book? What does a typical wedding cost? Do you do smaller elopements?</span>
+        </label>
+      </li>
+    </ul>
+  </section>
+
+  <section class="cadence">
+    <div class="cadence-head">
+      <h2>Every month</h2>
+      <span class="cost">15 minutes</span>
+    </div>
+    <p>Google favours profiles that show recent activity, and this is also the right home for anything seasonal.</p>
+    <ul class="tasks">
+      <li class="task">
+        <input type="checkbox" id="t14">
+        <label for="t14">
+          <span class="task-title">Post once</span>
+          <span class="task-note">A recent wedding, a seasonal bloom you are excited about, an open date you would like to fill. Two sentences and a photo is plenty.</span>
+        </label>
+      </li>
+      <li class="task">
+        <input type="checkbox" id="t15">
+        <label for="t15">
+          <span class="task-title">Put seasonal offers here, not on the website</span>
+          <span class="task-note">Valentine&rsquo;s, Mother&rsquo;s Day, prom &mdash; these belong in Google Posts with your Square link, because posts expire on their own. That is exactly how Valentine&rsquo;s arrangements ended up still live on your site in August.</span>
+        </label>
+      </li>
+      <li class="task">
+        <input type="checkbox" id="t16">
+        <label for="t16">
+          <span class="task-title">Add three to five new photos</span>
+          <span class="task-note">Whatever you shot that month. Steady beats perfect.</span>
+        </label>
+      </li>
+    </ul>
+  </section>
+
+  <section class="cadence">
+    <div class="cadence-head">
+      <h2>After every wedding</h2>
+      <span class="cost">5 minutes</span>
+    </div>
+    <p>Reviews are the single biggest lever you have, and the only reliable moment to ask is while the couple is still glowing. Ask within a week.</p>
+    <ul class="tasks">
+      <li class="task">
+        <input type="checkbox" id="t17">
+        <label for="t17">
+          <span class="task-title">Get your short review link once</span>
+          <span class="task-note">In your profile, choose <span class="path">Ask for reviews</span> and copy the link. Save it in your phone. You will use it after every single wedding.</span>
+        </label>
+      </li>
+      <li class="task">
+        <input type="checkbox" id="t18">
+        <label for="t18">
+          <span class="task-title">Text the couple the message below</span>
+          <span class="task-note">Sending a link they can tap beats asking them to go find you on Google. Most people who mean to leave a review never do, purely from friction.</span>
+        </label>
+      </li>
+      <li class="task">
+        <input type="checkbox" id="t19">
+        <label for="t19">
+          <span class="task-title">Reply to every review, good or bad</span>
+          <span class="task-note">A warm two-line reply is enough. On a negative one: thank them, address the specific thing, offer to talk offline. Future couples read your replies far more closely than they read the reviews.</span>
+        </label>
+      </li>
+    </ul>
+
+    <div class="copyblock">
+      <div class="copyblock-head">
+        <span>Review request &mdash; text message</span>
+        <button class="copybtn" data-copy="review">Copy</button>
+      </div>
+      <p id="review">Hi [name]! It was such a joy being part of your day — thank you for trusting me with your flowers. If you have two minutes, would you mind leaving a quick review? It genuinely helps other Montana couples find me. [paste your review link] — Beka</p>
+    </div>
+  </section>
+
+  <section class="cadence is-warn">
+    <div class="cadence-head">
+      <h2>Never do these</h2>
+      <span class="cost">Read once</span>
+    </div>
+    <p>Each of these can get a profile demoted or suspended, and getting reinstated is slow and miserable.</p>
+    <ul class="nevers">
+      <li class="never">
+        <b>Do not add keywords to your business name</b>
+        <span>&ldquo;Sapphire Stem Floral Design&rdquo; is the name. Not &ldquo;Sapphire Stem Floral Design | Big Timber Montana Wedding Florist.&rdquo; This is the most common suspension cause, and competitors do report it.</span>
+      </li>
+      <li class="never">
+        <b>Do not list an address you do not staff</b>
+        <span>No PO boxes, no a friend&rsquo;s shop, no coworking address. If you work from home and would rather not publish it, hide it and use a service area &mdash; that is what the setting is for.</span>
+      </li>
+      <li class="never">
+        <b>Do not buy reviews or swap them with other vendors</b>
+        <span>Google detects clustered reviews from unrelated accounts and removes them, and the profile takes the damage. Ten real reviews outrank fifty suspicious ones.</span>
+      </li>
+      <li class="never">
+        <b>Do not create a second profile</b>
+        <span>One business, one profile. Duplicates split your reviews and photos across two listings and Google may suspend both.</span>
+      </li>
+    </ul>
+  </section>
+
+  <footer class="colophon">
+    <p>Tick the boxes as you go &mdash; the count at the top updates. The list does not save when you close the page, so work through a section at a time.</p>
+    <p>Once the new website is live, the profile and the site will reinforce each other: matching phone number, matching service area, matching prices. That consistency is most of local SEO.</p>
+  </footer>
+
+</div>
+
+<div class="toast" id="toast" role="status" aria-live="polite">Copied</div>
+
+<script>
+  const boxes = document.querySelectorAll('.task input');
+  const doneEl = document.getElementById('done');
+  document.getElementById('total').textContent = boxes.length;
+
+  function tally() {
+    doneEl.textContent = document.querySelectorAll('.task input:checked').length;
+  }
+  boxes.forEach(b => b.addEventListener('change', tally));
+  tally();
+
+  const toast = document.getElementById('toast');
+  let toastTimer;
+
+  document.querySelectorAll('.copybtn').forEach(btn => {
+    btn.addEventListener('click', async () => {
+      const text = document.getElementById(btn.dataset.copy).textContent.trim();
+      try {
+        await navigator.clipboard.writeText(text);
+        toast.textContent = 'Copied';
+      } catch {
+        toast.textContent = 'Select the text and copy';
+      }
+      toast.classList.add('show');
+      clearTimeout(toastTimer);
+      toastTimer = setTimeout(() => toast.classList.remove('show'), 1800);
+    });
+  });
+</script>

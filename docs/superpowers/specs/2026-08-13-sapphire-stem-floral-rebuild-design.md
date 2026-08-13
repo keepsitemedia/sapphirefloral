@@ -241,11 +241,16 @@ Twitter card tags, with a real per-page `og:image`.
 
 | Route | Title |
 |---|---|
-| `/` | Wedding Florist in Big Timber, MT — Sapphire Stem Floral |
+| `/` | Montana Wedding Florist — Sapphire Stem Floral Design |
 | `/about` | About Beka Greenall — Sapphire Stem Floral Design |
-| `/portfolio` | Wedding Floral Portfolio — Southwest Montana |
-| `/weddings` | Wedding Flowers & À La Carte Pricing — Big Timber, MT |
+| `/portfolio` | Wedding Floral Portfolio — Montana |
+| `/weddings` | Wedding Flowers & À La Carte Pricing — Montana |
 | `/contact` | Inquire — Sapphire Stem Floral Design |
+
+Titles lead with Montana rather than Big Timber: she travels statewide, and
+Bozeman and Big Sky are far larger wedding markets than her home town. Big Timber
+still appears in the descriptions, the `/weddings` travel section, and the
+`Florist` schema.
 
 Descriptions are authored per page in `pages/*.md` frontmatter, 140–160 characters.
 
@@ -258,13 +263,45 @@ navigation and are dropped without redirects.
 
 ### Structured data (JSON-LD)
 
-- `Florist` / `LocalBusiness` — name, phone, email, Big Timber address, `geo`,
-  `areaServed: Southwest Montana`, `sameAs` (Instagram `@sapphirestemfloral`,
-  Facebook "Sapphire Stem Floral Design"), `priceRange`, `foundingDate: 2025`
+- `Florist` / `LocalBusiness` — name, phone, email, `geo` for Big Timber,
+  `sameAs` (Instagram `@sapphirestemfloral`, Facebook "Sapphire Stem Floral
+  Design"), `priceRange`, `foundingDate: 2025`. Modelled as a **service-area
+  business**: `areaServed` as an array of `City` entries rather than a
+  `streetAddress`. See §6.1.
 - `Service` — wedding and event floral design
 - `BreadcrumbList` — inner pages
 - `FAQPage` — `/weddings`, built from existing copy (how à la carte works, why
   foam-free, how budgets are handled)
+
+### 6.1 Service area
+
+Beka is a **travelling florist**, not a shop with a catchment. Confirmed service
+area:
+
+**Base:** Big Timber, MT (Sweet Grass County)
+**Travels to:** Bozeman, Big Sky, Livingston, Billings, Butte, Missoula
+**Plus nearby:** Columbus, Absarokee, Melville, McLeod
+
+Missoula is roughly four hours from Big Timber, so this is a statewide radius —
+which materially changes the positioning. She is not "a Big Timber florist"; she
+is a Montana wedding florist who travels. Copy, titles, and schema should say so.
+
+`areaServed` is an array of `City` objects covering the list above; no
+`streetAddress` is published. Home-studio florists routinely hide the address,
+and this matches how the Google Business Profile should be configured (see the
+client guide at `docs/client/google-business-profile.html`).
+
+The `/weddings` page carries a short, genuinely written **"Where we travel"**
+section naming the cities in prose, so the terms exist as real crawlable content
+rather than only as markup.
+
+**Deliberately not doing:** per-city landing pages (`/weddings/bozeman`,
+`/weddings/missoula`). It is the standard local-SEO play and it would probably
+work, but six near-identical pages on a five-page site is thin content, and
+Google has gotten materially better at demoting exactly that pattern. If Bozeman
+and Big Sky prove to be where the revenue is, the right answer is two
+substantial pages with real venue knowledge and real weddings from each — not
+six templated ones. Flagged as a post-launch decision, not built now.
 
 ### Technical
 
