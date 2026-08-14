@@ -11,7 +11,7 @@ const walk = (dir) => readdirSync(dir, { withFileTypes: true })
 
 // Routes and their required content. Pages tasks append entries here.
 export const ROUTES = {
-  '/': { h1: null, descIncludes: null },
+  '/': { h1: 'florals for', descIncludes: 'Bozeman' },
 };
 
 const routeFile = (r) => r === '/' ? join(DIST, 'index.html') : join(DIST, r.slice(1), 'index.html');

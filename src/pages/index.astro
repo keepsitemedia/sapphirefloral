@@ -1,0 +1,52 @@
+---
+import { getCollection, getEntry, render } from 'astro:content';
+import { Image } from 'astro:assets';
+import Base from '../layouts/Base.astro';
+import Cta from '../components/Cta.astro';
+import { SITE } from '../data/site';
+import hero from '../assets/site/hero.jpg';
+const home = await getEntry('pages', 'home');
+const { Content } = await render(home!);
+const featured = (await getCollection('portfolio', (e) => e.data.featured))
+  .sort((a, b) => a.data.order - b.data.order).slice(0, 6);
+---
+<Base title={home!.data.seoTitle} description={home!.data.description}>
+  <section class="wrap hero">
+    <div class="hero-copy">
+      <p class="eyebrow">Wedding &amp; event florist · {SITE.base}</p>
+      <h1>Environmentally-conscious, artful, romantic, and fun florals for Montana.</h1>
+      <p>Serving {SITE.cities.join(', ')}, and everywhere in between.</p>
+      <a class="btn" href="/contact">Inquire about your date</a>
+    </div>
+    <Image src={hero} alt="Bride in a cream cowboy hat seated at a sweetheart table set with autumn flowers, fruit, and taper candles in a golden Montana grassland at sunset" width={880} widths={[440, 880]} sizes="(max-width: 46rem) 100vw, 50vw" loading="eager" />
+  </section>
+
+  <section class="wrap pillars"><Content /></section>
+
+  <section class="wrap">
+    <h2>Recent work</h2>
+    <ul class="grid">
+      {featured.map((e) => (
+        <li>
+          <Image src={e.data.image} alt={e.data.alt} width={640} widths={[320, 640]} sizes="(max-width: 46rem) 50vw, 33vw" />
+        </li>
+      ))}
+    </ul>
+    <a href="/portfolio">See the full portfolio →</a>
+  </section>
+
+  <Cta />
+</Base>
+<style>
+  .hero { display: grid; gap: var(--s4); align-items: center;
+    grid-template-columns: 1fr 1fr; padding-block: var(--s5); }
+  .hero-copy { display: flex; flex-direction: column; gap: var(--s3); align-items: flex-start; }
+  .pillars :global(h2) { padding-block: var(--s4) var(--s2); }
+  .pillars :global(h3) { padding-block: var(--s3) var(--s1); color: var(--accent); }
+  .grid { list-style: none; margin: 0; padding: var(--s3) 0; display: grid;
+    gap: var(--s2); grid-template-columns: repeat(3, 1fr); }
+  @media (max-width: 46rem) {
+    .hero { grid-template-columns: 1fr; }
+    .grid { grid-template-columns: repeat(2, 1fr); }
+  }
+</style>
