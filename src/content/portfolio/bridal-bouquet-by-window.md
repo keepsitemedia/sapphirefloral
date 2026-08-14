@@ -1,8 +1,8 @@
 ---
-title: Bouquet by the window
+title: All-white bouquet by the window
 image: ../../assets/portfolio/bridal-bouquet-by-window.jpg
-alt: Bride in a lace gown holding a white garden rose bouquet up near a sunlit window
+alt: A hand holding a compact all-white bouquet of garden roses, ranunculus, and a navy-centered anemone in the light of a window
 category: personals
 featured: false
-order: 12
+order: 11
 ---

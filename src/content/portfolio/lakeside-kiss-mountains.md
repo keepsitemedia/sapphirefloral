@@ -1,8 +1,8 @@
 ---
-title: A kiss beneath the peaks
+title: A kiss by the river
 image: ../../assets/portfolio/lakeside-kiss-mountains.jpg
-alt: Groom kissing the bride's cheek beside a river with snow-capped mountains behind them, her veil catching the breeze and a cascading orchid bouquet in her arms
+alt: Groom kissing the bride's cheek beside a river below green Montana hills, her lace train spread across the grass and a cascading orchid and rose bouquet in her arms
 category: wedding
 featured: false
-order: 4
+order: 7
 ---

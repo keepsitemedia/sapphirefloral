@@ -1,8 +1,8 @@
 ---
-title: Ceremony arch by the pond
+title: Ceremony columns by the pond
 image: ../../assets/portfolio/arch-installation-pond.jpg
-alt: Twin moss-and-white-flower covered arch columns framing a mountain pond at dusk, with snow-capped peaks reflected in the still water
+alt: Two evergreen and white hydrangea ceremony columns on a stone pad beside a pond, with snow-dusted Montana peaks rising behind them under an overcast sky
 category: installation
 featured: true
-order: 7
+order: 5
 ---
