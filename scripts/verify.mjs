@@ -10,8 +10,13 @@ const walk = (dir) => readdirSync(dir, { withFileTypes: true })
   .flatMap((e) => e.isDirectory() ? walk(join(dir, e.name)) : [join(dir, e.name)]);
 
 // Routes and their required content. Pages tasks append entries here.
+// `bytes` overrides the default 15KB HTML budget for that route.
 export const ROUTES = {
   '/': { h1: 'florals for', descIncludes: 'Bozeman' },
+  '/about': { h1: 'About Beka', descIncludes: 'Ph.D.' },
+  // Beka adds photos to the gallery through the CMS and each one costs ~450B
+  // of markup. A flat 15KB would make her own uploads break the build.
+  '/portfolio': { h1: 'Portfolio', descIncludes: 'Montana', bytes: 22_000 },
 };
 
 const routeFile = (r) => r === '/' ? join(DIST, 'index.html') : join(DIST, r.slice(1), 'index.html');
@@ -22,7 +27,8 @@ for (const [route, req] of Object.entries(ROUTES)) {
   const html = readFileSync(f, 'utf8');
   const bytes = statSync(f).size;
 
-  if (bytes > 15_000) fail(`${route}: HTML ${bytes}B exceeds 15KB budget`); else ok(`${route}: HTML ${bytes}B`);
+  const budget = req.bytes ?? 15_000;
+  if (bytes > budget) fail(`${route}: HTML ${bytes}B exceeds ${budget}B budget`); else ok(`${route}: HTML ${bytes}B`);
   const h1s = html.match(/<h1[\s>]/g) ?? [];
   if (h1s.length !== 1) fail(`${route}: ${h1s.length} <h1> elements (need exactly 1)`);
   if (req.h1 && !html.includes(req.h1)) fail(`${route}: h1 text "${req.h1}" not found`);
@@ -36,8 +42,16 @@ for (const [route, req] of Object.entries(ROUTES)) {
 
 // Budgets across dist
 const files = walk(DIST);
-const js = files.filter((f) => f.endsWith('.js'));
-const jsBytes = js.reduce((n, f) => n + statSync(f).size, 0);
+// Astro inlines small scripts straight into the HTML, so counting dist/**/*.js
+// alone reports 0B and the budget never bites. The budget is what one visitor
+// downloads: every bundle, plus the inline scripts on the heaviest single page.
+const bundledJs = files.filter((f) => f.endsWith('.js'))
+  .reduce((n, f) => n + statSync(f).size, 0);
+const inlineJs = files.filter((f) => f.endsWith('.html'))
+  .map((f) => [...readFileSync(f, 'utf8')
+    .matchAll(/<script\b(?![^>]*\btype="application\/ld\+json")[^>]*>([\s\S]*?)<\/script>/g)]
+    .reduce((n, m) => n + Buffer.byteLength(m[1]), 0));
+const jsBytes = bundledJs + Math.max(0, ...inlineJs);
 if (jsBytes > 5_000) fail(`JS total ${jsBytes}B exceeds 5KB budget`); else ok(`JS total ${jsBytes}B`);
 
 const fonts = files.filter((f) => /\.(woff2?|otf|ttf)$/.test(f));

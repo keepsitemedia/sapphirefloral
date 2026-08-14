@@ -1,0 +1,54 @@
+---
+import { getCollection } from 'astro:content';
+import { Image } from 'astro:assets';
+import Base from '../layouts/Base.astro';
+import Cta from '../components/Cta.astro';
+const entries = (await getCollection('portfolio'))
+  .sort((a, b) => a.data.order - b.data.order);
+---
+<Base title="Wedding Floral Portfolio — Montana" description="Bouquets, arches, and installations by Sapphire Stem Floral Design. Featured on Montana Bride, with photography by Cinema by Alle and Kindzerski Photography.">
+  <section class="wrap">
+    <p class="eyebrow">Featured on Montana Bride</p>
+    <h1>Portfolio</h1>
+    <ul class="grid">
+      {entries.map((e) => (
+        <li>
+          <button class="tile">
+            <Image src={e.data.image} alt={e.data.alt} width={640} widths={[320, 640]} sizes="(max-width: 46rem) 50vw, 33vw" />
+          </button>
+          {e.data.credit && <p class="credit">{e.data.credit}</p>}
+        </li>
+      ))}
+    </ul>
+    <p class="credit">Photos by Kindzerski Photography, Cinema by Alle, John Scott Bly, and Job Greenall.</p>
+  </section>
+  <dialog id="lightbox">
+    <button id="lb-close" autofocus>Close</button>
+    <div id="lb-body"></div>
+  </dialog>
+  <Cta />
+</Base>
+<style>
+  .grid { list-style: none; margin: 0; padding: var(--s3) 0; display: grid;
+    gap: var(--s2); grid-template-columns: repeat(3, 1fr); }
+  .tile { border: 0; padding: 0; background: none; cursor: zoom-in; display: block; width: 100%; }
+  .credit { font-size: 0.8rem; color: var(--muted); padding-top: 0.2rem; }
+  dialog { border: 0; padding: var(--s2); max-width: min(64rem, 92vw); background: var(--surface); }
+  dialog::backdrop { background: rgb(20 25 30 / 0.85); }
+  #lb-close { float: right; border: 1px solid var(--line); background: none;
+    padding: 0.3rem 0.8rem; cursor: pointer; font: inherit; }
+  @media (max-width: 46rem) { .grid { grid-template-columns: repeat(2, 1fr); } }
+</style>
+<script>
+  const dlg = document.getElementById('lightbox') as HTMLDialogElement;
+  const body = document.getElementById('lb-body')!;
+  document.querySelectorAll<HTMLButtonElement>('.tile').forEach((btn) => {
+    btn.addEventListener('click', () => {
+      const img = btn.querySelector('img')!.cloneNode(true) as HTMLImageElement;
+      img.sizes = '92vw';
+      body.replaceChildren(img);
+      dlg.showModal();
+    });
+  });
+  document.getElementById('lb-close')!.addEventListener('click', () => dlg.close());
+</script>

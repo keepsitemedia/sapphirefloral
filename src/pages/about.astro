@@ -1,0 +1,19 @@
+---
+import { getEntry, render } from 'astro:content';
+import Base from '../layouts/Base.astro';
+import Cta from '../components/Cta.astro';
+const page = await getEntry('pages', 'about');
+const { Content } = await render(page!);
+---
+<Base title={page!.data.seoTitle} description={page!.data.description}>
+  <article class="wrap prose">
+    <p class="eyebrow">Est. 2025 · Big Timber, Montana</p>
+    <h1>About Beka</h1>
+    <Content />
+  </article>
+  <Cta heading="I'd love to be your florist" />
+</Base>
+<style>
+  .prose { padding-block: var(--s5); display: flex; flex-direction: column; gap: var(--s3); }
+  .prose :global(h2) { padding-top: var(--s3); }
+</style>
