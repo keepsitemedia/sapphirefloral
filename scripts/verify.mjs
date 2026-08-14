@@ -17,6 +17,7 @@ export const ROUTES = {
   // Beka adds photos to the gallery through the CMS and each one costs ~450B
   // of markup. A flat 15KB would make her own uploads break the build.
   '/portfolio': { h1: 'Portfolio', descIncludes: 'Montana', bytes: 22_000 },
+  '/weddings': { h1: 'Wedding flowers', descIncludes: '4,000' },
 };
 
 const routeFile = (r) => r === '/' ? join(DIST, 'index.html') : join(DIST, r.slice(1), 'index.html');
@@ -39,6 +40,15 @@ for (const [route, req] of Object.entries(ROUTES)) {
   if (/<img(?![^>]*alt=")[^>]*>/.test(html)) fail(`${route}: img without alt`);
   if (/<img[^>]*alt=""/.test(html)) fail(`${route}: empty alt attribute`);
 }
+
+// Per-route content checks. Read through this helper so a missing route is a
+// reported failure rather than an ENOENT that skips every remaining check.
+const routeHtml = (r) => existsSync(routeFile(r)) ? readFileSync(routeFile(r), 'utf8') : '';
+
+const wed = routeHtml('/weddings');
+if (!wed.includes('FAQPage')) fail('/weddings: FAQPage JSON-LD missing');
+if (!wed.includes('<table')) fail('/weddings: pricing table missing');
+if (!wed.includes('Missoula')) fail('/weddings: travel section missing cities');
 
 // Budgets across dist
 const files = walk(DIST);

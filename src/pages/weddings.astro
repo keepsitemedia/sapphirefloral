@@ -1,0 +1,51 @@
+---
+import { getEntry, render } from 'astro:content';
+import Base from '../layouts/Base.astro';
+import Cta from '../components/Cta.astro';
+import AlaCarteTable from '../components/AlaCarteTable.astro';
+import { SITE } from '../data/site';
+const page = await getEntry('pages', 'weddings');
+const { Content } = await render(page!);
+const faqs = [
+  ['How does the à la carte menu work?', 'After we connect, you send your wedding color palette, styles you like, and any flower requests. I design your arrangements with the freshest seasonal flowers, and you pick up in Big Timber, MT on the weekday of your choice. $100 minimum.'],
+  ['Do you deliver and set up?', 'The à la carte menu is designed for pick-up. Delivery and setup is offered for weddings with a floral total of $2,000 or more, starting at $500 plus mileage, subject to availability.'],
+  ['How do we reserve our date?', 'A 50% non-refundable retainer secures your date. Once booked, I reserve my time and turn away other couples for that weekend to fully honor your celebration.'],
+  ['Where do you travel?', `Based in Big Timber, I regularly serve ${SITE.cities.slice(1).join(', ')}, and all of Southwest Montana. Farther afield is possible subject to travel costs and availability.`],
+  ['Can you work with our budget?', "I'm honored to work with couples at most price points. I offer thoughtful substitutions and creative design solutions to focus on the moments with the greatest impact. Let's connect and see what we can make happen."],
+  ['Are your designs sustainable?', 'Designs are foam-free wherever possible and avoid single-use plastics. Flowers are sourced locally when in season, and otherwise from wholesalers who value sustainability.'],
+];
+const faqSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: faqs.map(([q, a]) => ({
+    '@type': 'Question', name: q,
+    acceptedAnswer: { '@type': 'Answer', text: a },
+  })),
+};
+---
+<Base title={page!.data.seoTitle} description={page!.data.description}>
+  <script type="application/ld+json" set:html={JSON.stringify(faqSchema)} />
+  <article class="wrap flow">
+    <h1>Wedding flowers</h1>
+    <Content />
+    <AlaCarteTable />
+    <section>
+      <h2>Where we travel</h2>
+      <p>Sapphire Stem is based in Big Timber and serves couples across Montana. We regularly design weddings in {SITE.cities.slice(1, -1).join(', ')}, and {SITE.cities.at(-1)} — and everywhere between. Not in Southwest Montana? Travel options are available, subject to travel costs and availability.</p>
+    </section>
+    <section>
+      <h2>Common questions</h2>
+      {faqs.map(([q, a]) => (
+        <details><summary>{q}</summary><p>{a}</p></details>
+      ))}
+    </section>
+  </article>
+  <Cta heading="Ready to talk flowers?" />
+</Base>
+<style>
+  .flow { padding-block: var(--s5); display: flex; flex-direction: column; gap: var(--s4); }
+  .flow :global(h2) { padding-top: var(--s2); }
+  details { border-bottom: 1px solid var(--line); padding-block: var(--s2); }
+  summary { cursor: pointer; font-weight: 700; }
+  details p { padding-top: var(--s2); }
+</style>

@@ -1,0 +1,31 @@
+---
+import { getEntry } from 'astro:content';
+const menu = await getEntry('alacarte', 'alacarte');
+const groups = ['personals', 'ceremony', 'reception'] as const;
+const fmt = (n: number) => `$${n.toLocaleString('en-US')}`;
+---
+<table>
+  <caption class="eyebrow">À la carte menu — starting prices</caption>
+  {groups.map((g) => (
+    <tbody>
+      <tr><th class="group" colspan="2" scope="colgroup">{g}</th></tr>
+      {menu!.data.items.filter((i) => i.category === g)
+        .sort((a, b) => a.order - b.order)
+        .map((i) => (
+          <tr>
+            <th scope="row">{i.name}{i.note && <span class="note"> — {i.note}</span>}</th>
+            <td>Starting at {fmt(i.startingAt)}</td>
+          </tr>
+        ))}
+    </tbody>
+  ))}
+</table>
+<style>
+  table { width: 100%; border-collapse: collapse; }
+  caption { text-align: left; padding-block: var(--s2); }
+  th, td { text-align: left; padding: 0.55rem 0.4rem; border-bottom: 1px solid var(--line); font-weight: 400; }
+  td { text-align: right; font-variant-numeric: tabular-nums; white-space: nowrap; }
+  .group { font-family: var(--display); font-size: 1.15rem; color: var(--accent);
+    text-transform: capitalize; padding-top: var(--s3); }
+  .note { color: var(--muted); font-size: 0.9rem; }
+</style>
