@@ -13,6 +13,15 @@ const year = new Date().getFullYear();
       <p><a href={SITE.phoneHref}>{SITE.phone}</a><br /><a href={`mailto:${SITE.email}`}>{SITE.email}</a></p>
     </div>
     <div>
+      <p class="eyebrow">Pages</p>
+      <ul class="sitelinks">
+        <li><a href="/portfolio">Portfolio</a></li>
+        <li><a href="/weddings">Weddings</a></li>
+        <li><a href="/about">About</a></li>
+        <li><a href="/contact">Contact</a></li>
+      </ul>
+    </div>
+    <div>
       <p class="eyebrow">Follow</p>
       <p><a href={SITE.instagramUrl}>Instagram {SITE.instagram}</a><br /><a href={SITE.facebookUrl}>Facebook</a></p>
     </div>
@@ -23,6 +32,9 @@ const year = new Date().getFullYear();
   footer { border-top: 1px solid var(--line); margin-top: var(--s6);
     padding-block: var(--s4); background: var(--surface); }
   .cols { display: grid; gap: var(--s3); grid-template-columns: repeat(auto-fit, minmax(14rem, 1fr)); }
+  /* Also the only navigation when JS is off: the header nav collapses to a
+     button-driven menu under 46rem. */
+  .sitelinks { list-style: none; margin: 0; padding: 0; }
   .fine { color: var(--muted); font-size: 0.85rem; padding-top: var(--s4); max-width: none; }
   footer a { color: var(--ink-soft); }
 </style>
