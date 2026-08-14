@@ -1,0 +1,19 @@
+:root {
+  --ground: #faf9f6;
+  --surface: #ffffff;
+  --ink: #21272b;
+  --ink-soft: #4c565c;
+  --muted: #77828a;
+  --line: #e3e1da;
+  --accent: #2f4d7e;      /* Yogo sapphire */
+  --accent-soft: #eaeef5;
+  --sage: #77835f;
+  --sage-soft: #eef0e8;
+
+  --display: 'Fraunces Variable', Georgia, serif;
+  --body: 'Karla Variable', 'Segoe UI', system-ui, sans-serif;
+
+  --s1: 0.5rem; --s2: 0.85rem; --s3: 1.35rem;
+  --s4: 2.2rem; --s5: 3.5rem; --s6: 5.5rem;
+  --measure: 62ch;
+}
