@@ -48,6 +48,7 @@ const big = images.filter((f) => statSync(f).size > 200_000);
 for (const f of big) fail(`image over 200KB: ${f} (${statSync(f).size}B)`);
 if (!big.length) ok(`${images.length} images all under 200KB`);
 
+if (!existsSync(join(DIST, '404.html'))) fail('404.html missing');
 if (!existsSync(join(DIST, 'robots.txt'))) fail('robots.txt missing');
 if (!existsSync(join(DIST, 'sitemap-index.xml'))) fail('sitemap missing');
 

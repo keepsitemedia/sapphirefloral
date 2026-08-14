@@ -1,0 +1,28 @@
+---
+import { SITE } from '../data/site';
+const year = new Date().getFullYear();
+---
+<footer>
+  <div class="wrap cols">
+    <div>
+      <p class="eyebrow">Studio</p>
+      <p>Based in {SITE.base}, traveling to {SITE.cities.slice(1).join(', ')} and beyond.</p>
+    </div>
+    <div>
+      <p class="eyebrow">Contact</p>
+      <p><a href={SITE.phoneHref}>{SITE.phone}</a><br /><a href={`mailto:${SITE.email}`}>{SITE.email}</a></p>
+    </div>
+    <div>
+      <p class="eyebrow">Follow</p>
+      <p><a href={SITE.instagramUrl}>Instagram {SITE.instagram}</a><br /><a href={SITE.facebookUrl}>Facebook</a></p>
+    </div>
+  </div>
+  <p class="wrap fine">© {SITE.name} {year} · Big Timber &amp; Southwest Montana</p>
+</footer>
+<style>
+  footer { border-top: 1px solid var(--line); margin-top: var(--s6);
+    padding-block: var(--s4); background: var(--surface); }
+  .cols { display: grid; gap: var(--s3); grid-template-columns: repeat(auto-fit, minmax(14rem, 1fr)); }
+  .fine { color: var(--muted); font-size: 0.85rem; padding-top: var(--s4); max-width: none; }
+  footer a { color: var(--ink-soft); }
+</style>

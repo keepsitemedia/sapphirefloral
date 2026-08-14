@@ -1,0 +1,13 @@
+---
+interface Props { heading?: string }
+const { heading = "Let's design your day" } = Astro.props;
+---
+<section class="wrap cta">
+  <h2>{heading}</h2>
+  <p>Tell me about your wedding or event — I'd love to be your florist.</p>
+  <a class="btn" href="/contact">Start an inquiry</a>
+</section>
+<style>
+  .cta { text-align: center; padding-block: var(--s5);
+    display: flex; flex-direction: column; align-items: center; gap: var(--s3); }
+</style>

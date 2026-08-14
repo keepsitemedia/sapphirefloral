@@ -1,0 +1,26 @@
+---
+import '../styles/fonts.css';
+import '../styles/tokens.css';
+import '../styles/base.css';
+import SEO from '../components/SEO.astro';
+import Schema from '../components/Schema.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+interface Props { title: string; description: string; ogImage?: string; noindex?: boolean }
+const { title, description, ogImage, noindex } = Astro.props;
+---
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <SEO {title} {description} {ogImage} />
+    {noindex && <meta name="robots" content="noindex" />}
+    <Schema />
+  </head>
+  <body>
+    <Header />
+    <main id="main"><slot /></main>
+    <Footer />
+  </body>
+</html>

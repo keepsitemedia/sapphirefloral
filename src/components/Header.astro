@@ -1,0 +1,54 @@
+---
+import { getEntry } from 'astro:content';
+const settings = await getEntry('settings', 'settings');
+const nav = [
+  ['/portfolio', 'Portfolio'], ['/weddings', 'Weddings'],
+  ['/about', 'About'], ['/contact', 'Contact'],
+];
+const path = Astro.url.pathname.replace(/\/$/, '') || '/';
+---
+<p class="banner">{settings!.data.bookingBanner}</p>
+<header class="wrap site-head">
+  <a class="brand" href="/">Sapphire Stem <span>floral design</span></a>
+  <button class="nav-toggle" aria-expanded="false" aria-controls="site-nav">Menu</button>
+  <nav id="site-nav" aria-label="Main">
+    <ul>
+      {nav.map(([href, label]) => (
+        <li><a href={href} aria-current={path === href ? 'page' : undefined}>{label}</a></li>
+      ))}
+      <li><a class="btn" href="/contact">Inquire</a></li>
+    </ul>
+  </nav>
+</header>
+<style>
+  .banner { background: var(--accent); color: #fff; text-align: center;
+    font-size: 0.8rem; letter-spacing: 0.12em; text-transform: uppercase;
+    padding: 0.45rem var(--s2); max-width: none; }
+  .site-head { display: flex; align-items: center; justify-content: space-between;
+    gap: var(--s3); padding-block: var(--s3); }
+  .brand { font-family: var(--display); font-size: 1.35rem; color: var(--ink);
+    text-decoration: none; line-height: 1.05; }
+  .brand span { display: block; font-size: 0.72rem; font-family: var(--body);
+    letter-spacing: 0.28em; text-transform: uppercase; color: var(--muted); }
+  nav ul { display: flex; align-items: center; gap: var(--s3); list-style: none;
+    margin: 0; padding: 0; }
+  nav a:not(.btn) { color: var(--ink-soft); text-decoration: none; }
+  nav a[aria-current="page"] { color: var(--accent); font-weight: 700; }
+  .nav-toggle { display: none; }
+  @media (max-width: 46rem) {
+    .nav-toggle { display: block; background: none; border: 1px solid var(--line);
+      padding: 0.4rem 0.9rem; font: inherit; cursor: pointer; }
+    nav { display: none; width: 100%; }
+    nav.open { display: block; }
+    nav ul { flex-direction: column; align-items: flex-start; padding-block: var(--s2); }
+    .site-head { flex-wrap: wrap; }
+  }
+</style>
+<script>
+  const btn = document.querySelector('.nav-toggle')!;
+  const nav = document.getElementById('site-nav')!;
+  btn.addEventListener('click', () => {
+    const open = nav.classList.toggle('open');
+    btn.setAttribute('aria-expanded', String(open));
+  });
+</script>

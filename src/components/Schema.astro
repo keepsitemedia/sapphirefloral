@@ -1,0 +1,20 @@
+---
+import { SITE } from '../data/site';
+const schema = {
+  '@context': 'https://schema.org',
+  '@type': 'Florist',
+  name: SITE.name,
+  telephone: SITE.phone,
+  email: SITE.email,
+  url: 'https://sapphirestemfloral.com',
+  foundingDate: '2025',
+  priceRange: '$$',
+  founder: { '@type': 'Person', name: 'Beka Greenall' },
+  areaServed: [
+    ...SITE.cities.map((c) => ({ '@type': 'City', name: `${c}, MT` })),
+    { '@type': 'AdministrativeArea', name: 'Southwest Montana' },
+  ],
+  sameAs: [SITE.instagramUrl, SITE.facebookUrl],
+};
+---
+<script type="application/ld+json" set:html={JSON.stringify(schema)} />
