@@ -18,6 +18,7 @@ export const ROUTES = {
   // of markup. A flat 15KB would make her own uploads break the build.
   '/portfolio': { h1: 'Portfolio', descIncludes: 'Montana', bytes: 22_000 },
   '/weddings': { h1: 'Wedding flowers', descIncludes: '4,000' },
+  '/contact': { h1: "I'd love to be your florist", descIncludes: 'booking' },
 };
 
 const routeFile = (r) => r === '/' ? join(DIST, 'index.html') : join(DIST, r.slice(1), 'index.html');
@@ -30,11 +31,15 @@ for (const [route, req] of Object.entries(ROUTES)) {
 
   const budget = req.bytes ?? 15_000;
   if (bytes > budget) fail(`${route}: HTML ${bytes}B exceeds ${budget}B budget`); else ok(`${route}: HTML ${bytes}B`);
+  // Astro escapes apostrophes and ampersands in text, so copy assertions are
+  // written plainly and compared against the decoded HTML.
+  const text = html.replace(/&#39;|&apos;/g, "'").replace(/&quot;/g, '"').replace(/&amp;/g, '&');
+
   const h1s = html.match(/<h1[\s>]/g) ?? [];
   if (h1s.length !== 1) fail(`${route}: ${h1s.length} <h1> elements (need exactly 1)`);
-  if (req.h1 && !html.includes(req.h1)) fail(`${route}: h1 text "${req.h1}" not found`);
+  if (req.h1 && !text.includes(req.h1)) fail(`${route}: h1 text "${req.h1}" not found`);
   if (!/<meta name="description" content=".{50,}"/.test(html)) fail(`${route}: meta description missing or too short`);
-  if (req.descIncludes && !html.includes(req.descIncludes)) fail(`${route}: description must include "${req.descIncludes}"`);
+  if (req.descIncludes && !text.includes(req.descIncludes)) fail(`${route}: description must include "${req.descIncludes}"`);
   if (!html.includes('<link rel="canonical"')) fail(`${route}: canonical missing`);
   if (!html.includes('og:title')) fail(`${route}: og:title missing`);
   if (/<img(?![^>]*alt=")[^>]*>/.test(html)) fail(`${route}: img without alt`);
@@ -49,6 +54,13 @@ const wed = routeHtml('/weddings');
 if (!wed.includes('FAQPage')) fail('/weddings: FAQPage JSON-LD missing');
 if (!wed.includes('<table')) fail('/weddings: pricing table missing');
 if (!wed.includes('Missoula')) fail('/weddings: travel section missing cities');
+
+const contact = routeHtml('/contact');
+if (!contact.includes('data-netlify="true"')) fail('/contact: Netlify form attribute missing');
+if (!contact.includes('netlify-honeypot')) fail('/contact: honeypot missing');
+if ((contact.match(/<label/g) ?? []).length < 10) fail('/contact: labels missing');
+const ty = routeHtml('/thank-you');
+if (!ty.includes('noindex')) fail('/thank-you: noindex missing');
 
 // Budgets across dist
 const files = walk(DIST);

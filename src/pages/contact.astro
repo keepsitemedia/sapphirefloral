@@ -1,0 +1,17 @@
+---
+import { getEntry, render } from 'astro:content';
+import Base from '../layouts/Base.astro';
+import InquiryForm from '../components/InquiryForm.astro';
+import { SITE } from '../data/site';
+const page = await getEntry('pages', 'contact');
+const { Content } = await render(page!);
+---
+<Base title={page!.data.seoTitle} description={page!.data.description}>
+  <section class="wrap flow">
+    <h1>{page!.data.title}</h1>
+    <Content />
+    <InquiryForm />
+    <p>Or reach me directly: <a href={SITE.phoneHref}>{SITE.phone}</a> · <a href={`mailto:${SITE.email}`}>{SITE.email}</a> · <a href={SITE.instagramUrl}>Instagram</a></p>
+  </section>
+</Base>
+<style>.flow { padding-block: var(--s5); display: flex; flex-direction: column; gap: var(--s4); }</style>
