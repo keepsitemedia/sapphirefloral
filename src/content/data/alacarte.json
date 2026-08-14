@@ -1,0 +1,24 @@
+[
+  {
+    "id": "alacarte",
+    "items": [
+      { "category": "personals", "name": "Bridal bouquet", "startingAt": 250, "order": 1 },
+      { "category": "personals", "name": "Bridesmaid bouquet", "startingAt": 75, "order": 2 },
+      { "category": "personals", "name": "Boutonniere", "startingAt": 25, "order": 3 },
+      { "category": "personals", "name": "Pocket square", "startingAt": 35, "order": 4 },
+      { "category": "personals", "name": "Corsage", "startingAt": 45, "order": 5 },
+      { "category": "ceremony", "name": "Aisle marker", "startingAt": 250, "order": 1 },
+      { "category": "ceremony", "name": "Arch accent flowers", "startingAt": 350, "order": 2 },
+      { "category": "ceremony", "name": "Pedestal arrangement", "startingAt": 500, "order": 3 },
+      { "category": "ceremony", "name": "Meadow semi circle", "startingAt": 1500, "order": 4 },
+      { "category": "ceremony", "name": "Full arch", "startingAt": 2500, "order": 5 },
+      { "category": "reception", "name": "Bud vases", "startingAt": 10, "order": 1 },
+      { "category": "reception", "name": "Petite centerpiece", "startingAt": 50, "order": 2 },
+      { "category": "reception", "name": "Signature centerpiece", "startingAt": 175, "order": 3 },
+      { "category": "reception", "name": "Long and low centerpiece", "startingAt": 250, "order": 4 },
+      { "category": "reception", "name": "Bar arrangement", "startingAt": 300, "order": 5 },
+      { "category": "reception", "name": "Table garland", "startingAt": 40, "order": 6 },
+      { "category": "reception", "name": "Cake flowers", "startingAt": 40, "order": 7 }
+    ]
+  }
+]
