@@ -1,19 +1,64 @@
 ---
 import { getEntry, render } from 'astro:content';
+import { Image } from 'astro:assets';
 import Base from '../layouts/Base.astro';
 import Cta from '../components/Cta.astro';
+import portrait from '../assets/site/beka.jpg';
 const page = await getEntry('pages', 'about');
 const { Content } = await render(page!);
 ---
 <Base title={page!.data.seoTitle} description={page!.data.description}>
-  <article class="wrap prose">
-    <p class="eyebrow">Est. 2025 · Big Timber, Montana</p>
-    <h1>About Beka</h1>
+  <section class="intro">
+    <div class="wrap intro-grid">
+      <div class="intro-copy">
+        <p class="eyebrow">Est. 2025 · Big Timber, Montana</p>
+        <h1>About Beka</h1>
+        <p class="lede">A biologist who kept coming back to flowers.</p>
+      </div>
+      <div class="intro-media">
+        <Image src={portrait} alt="Beka Greenall smiling behind an armful of pink king protea in her flower cooler" width={760} widths={[380, 760]} sizes="(max-width: 52rem) 100vw, 40vw" loading="eager" />
+      </div>
+    </div>
+  </section>
+
+  <article class="wrap-narrow prose">
     <Content />
   </article>
-  <Cta heading="I'd love to be your florist" />
+
+  <Cta heading="I’d love to be your florist" />
 </Base>
+
 <style>
-  .prose { padding-block: var(--s5); display: flex; flex-direction: column; gap: var(--s3); }
-  .prose :global(h2) { padding-top: var(--s3); }
+  .intro { padding-block: var(--s5) 0; }
+  .intro-grid {
+    display: grid; grid-template-columns: 1fr 1fr;
+    gap: var(--s5); align-items: end;
+  }
+  .intro-copy { display: flex; flex-direction: column; gap: var(--s3); }
+  .intro-copy .lede { max-width: 22ch; }
+  .intro-media :global(img) {
+    aspect-ratio: 4 / 5; object-fit: cover; width: 100%;
+    border-radius: var(--r3);
+  }
+
+  .prose { padding-block: var(--s6); display: flex; flex-direction: column; gap: var(--s4); }
+  .prose :global(p) { color: var(--ink-soft); font-size: 1.08rem; }
+  /* The opening line is the thesis of the whole page — set it like one. */
+  .prose :global(p:first-of-type) {
+    font-family: var(--display);
+    font-size: clamp(1.5rem, 3vw, 2.1rem);
+    line-height: 1.24;
+    letter-spacing: -0.015em;
+    color: var(--ink);
+    max-width: 24ch;
+  }
+  .prose :global(h2) {
+    padding-top: var(--s4); color: var(--sapphire);
+    border-top: 1px solid var(--line);
+  }
+
+  @media (max-width: 52rem) {
+    .intro-grid { grid-template-columns: 1fr; gap: var(--s4); }
+    .prose { padding-block: var(--s5); }
+  }
 </style>

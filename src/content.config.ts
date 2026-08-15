@@ -37,9 +37,23 @@ const alacarte = defineCollection({
   }),
 });
 
+const reviews = defineCollection({
+  loader: glob({ pattern: '*.md', base: './src/content/reviews' }),
+  schema: z.object({
+    quote: z.string().min(1),
+    name: z.string().min(1),
+    event: z.string().optional(),
+    order: z.number().default(0),
+    // Seeded examples so the band can be designed before Beka has real
+    // reviews. scripts/verify.mjs fails the build while any remain true, so a
+    // placeholder cannot reach production.
+    placeholder: z.boolean().default(false),
+  }),
+});
+
 const settings = defineCollection({
   loader: file('./src/content/data/settings.json'),
   schema: z.object({ id: z.string(), bookingBanner: z.string() }),
 });
 
-export const collections = { pages, portfolio, alacarte, settings };
+export const collections = { pages, portfolio, alacarte, settings, reviews };

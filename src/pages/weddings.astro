@@ -11,7 +11,7 @@ const faqs = [
   ['Do you deliver and set up?', 'The à la carte menu is designed for pick-up. Delivery and setup is offered for weddings with a floral total of $2,000 or more, starting at $500 plus mileage, subject to availability.'],
   ['How do we reserve our date?', 'A 50% non-refundable retainer secures your date. Once booked, I reserve my time and turn away other couples for that weekend to fully honor your celebration.'],
   ['Where do you travel?', `Based in Big Timber, I regularly serve ${SITE.cities.slice(1).join(', ')}, and all of Southwest Montana. Farther afield is possible subject to travel costs and availability.`],
-  ['Can you work with our budget?', "I'm honored to work with couples at most price points. I offer thoughtful substitutions and creative design solutions to focus on the moments with the greatest impact. Let's connect and see what we can make happen."],
+  ['Can you work with our budget?', 'I’m honored to work with couples at most price points. I offer thoughtful substitutions and creative design solutions to focus on the moments with the greatest impact. Let’s connect and see what we can make happen.'],
   ['Are your designs sustainable?', 'Designs are foam-free wherever possible and avoid single-use plastics. Flowers are sourced locally when in season, and otherwise from wholesalers who value sustainability.'],
 ];
 const faqSchema = {
@@ -25,27 +25,63 @@ const faqSchema = {
 ---
 <Base title={page!.data.seoTitle} description={page!.data.description}>
   <script type="application/ld+json" set:html={JSON.stringify(faqSchema)} />
-  <article class="wrap flow">
+
+  <section class="wrap head">
+    <hr class="rule" />
+    <p class="eyebrow">Two ways to work together</p>
     <h1>Wedding flowers</h1>
-    <Content />
-    <AlaCarteTable />
-    <section>
-      <h2>Where we travel</h2>
-      <p>Sapphire Stem is based in Big Timber and serves couples across Montana. We regularly design weddings in {SITE.cities.slice(1, -1).join(', ')}, and {SITE.cities.at(-1)} — and everywhere between. Not in Southwest Montana? Travel options are available, subject to travel costs and availability.</p>
-    </section>
-    <section>
-      <h2>Common questions</h2>
-      {faqs.map(([q, a]) => (
-        <details><summary>{q}</summary><p>{a}</p></details>
-      ))}
-    </section>
-  </article>
+  </section>
+
+  <article class="wrap-narrow intro"><Content /></article>
+
+  <section class="ground-cream-deep pricing">
+    <div class="wrap-narrow"><AlaCarteTable /></div>
+  </section>
+
+  <section class="wrap-narrow travel">
+    <hr class="rule" />
+    <h2>Where we travel</h2>
+    <p>Sapphire Stem is based in Big Timber and serves couples across Montana. We regularly design weddings in {SITE.cities.slice(1, -1).join(', ')}, and {SITE.cities.at(-1)} — and everywhere between. Not in Southwest Montana? Travel options are available, subject to travel costs and availability.</p>
+  </section>
+
+  <section class="wrap-narrow faq">
+    <hr class="rule" />
+    <h2>Common questions</h2>
+    {faqs.map(([q, a]) => (
+      <details>
+        <summary>{q}</summary>
+        <p>{a}</p>
+      </details>
+    ))}
+  </section>
+
   <Cta heading="Ready to talk flowers?" />
 </Base>
+
 <style>
-  .flow { padding-block: var(--s5); display: flex; flex-direction: column; gap: var(--s4); }
-  .flow :global(h2) { padding-top: var(--s2); }
-  details { border-bottom: 1px solid var(--line); padding-block: var(--s2); }
-  summary { cursor: pointer; font-weight: 700; }
-  details p { padding-top: var(--s2); }
+  .head { padding-block: var(--s5) var(--s4); display: flex; flex-direction: column; gap: var(--s3); }
+  .intro { padding-bottom: var(--s6); display: flex; flex-direction: column; gap: var(--s3); }
+  .intro :global(p) { color: var(--ink-soft); }
+  .intro :global(p:first-of-type) {
+    font-family: var(--display);
+    font-size: clamp(1.4rem, 2.6vw, 1.95rem);
+    line-height: 1.26; color: var(--ink); max-width: 26ch;
+  }
+  .intro :global(h2) { padding-top: var(--s3); }
+  .intro :global(ol) { color: var(--ink-soft); padding-left: 1.1rem; }
+  .intro :global(li) { padding-bottom: var(--s2); }
+
+  .pricing { padding-block: var(--s6); }
+  .travel, .faq { padding-block: var(--s6); display: flex; flex-direction: column; gap: var(--s3); }
+  .travel p { color: var(--ink-soft); }
+
+  details { border-bottom: 1px solid var(--line); padding-block: var(--s3); }
+  summary {
+    cursor: pointer; font-weight: 600; font-size: 1.02rem;
+    list-style: none; display: flex; justify-content: space-between; gap: var(--s3);
+  }
+  summary::-webkit-details-marker { display: none; }
+  summary::after { content: '+'; color: var(--gold-ink); font-size: 1.3rem; line-height: 1; }
+  details[open] summary::after { content: '−'; }
+  details p { padding-top: var(--s2); color: var(--ink-soft); }
 </style>

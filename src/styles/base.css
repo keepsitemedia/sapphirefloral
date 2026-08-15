@@ -1,39 +1,123 @@
 *, *::before, *::after { box-sizing: border-box; }
+
 body {
   margin: 0;
-  background: var(--ground);
+  background: var(--cream);
   color: var(--ink);
   font-family: var(--body);
   font-size: 1.0625rem;
-  line-height: 1.65;
+  line-height: 1.7;
+  font-synthesis: none;
   -webkit-font-smoothing: antialiased;
 }
+
 h1, h2, h3 {
   font-family: var(--display);
-  font-weight: 420;
-  line-height: 1.12;
-  letter-spacing: -0.01em;
+  font-weight: 400;
+  line-height: 1.02;
+  letter-spacing: -0.015em;
   text-wrap: balance;
   margin: 0;
 }
-h1 { font-size: clamp(2.2rem, 6vw, 3.4rem); }
-h2 { font-size: clamp(1.6rem, 4vw, 2.2rem); }
-h3 { font-size: 1.25rem; }
+h1 { font-size: clamp(2.9rem, 7.5vw, 5.6rem); }
+h2 { font-size: clamp(2rem, 4.4vw, 3.1rem); }
+h3 { font-size: 1.3rem; letter-spacing: -0.005em; }
+
 p { margin: 0; max-width: var(--measure); }
 img { max-width: 100%; height: auto; display: block; }
-a { color: var(--accent); text-underline-offset: 3px; }
-:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
+
+a { color: var(--sapphire); text-underline-offset: 3px; text-decoration-thickness: 1px; }
+
+:focus-visible { outline: 2px solid var(--sapphire-mid); outline-offset: 3px; }
+
+/* Layout primitives ------------------------------------------------------ */
+
+.wrap { max-width: 74rem; margin-inline: auto; padding-inline: var(--gutter); }
+.wrap-narrow { max-width: 46rem; margin-inline: auto; padding-inline: var(--gutter); }
+
+/* Colour blocks. The seam between these is where photography breaks across. */
+.ground-sapphire { background: var(--sapphire); color: var(--on-sapphire); }
+.ground-deep { background: var(--sapphire-deep); color: var(--on-sapphire); }
+.ground-blush { background: var(--blush); }
+.ground-cream-deep { background: var(--cream-deep); }
+
+.ground-sapphire h1, .ground-sapphire h2, .ground-sapphire h3,
+.ground-deep h1, .ground-deep h2, .ground-deep h3 { color: var(--on-sapphire); }
+/* Buttons opt out: these ground rules are more specific than .btn, and would
+   repaint .btn-light's text to near-white on its cream background. */
+.ground-sapphire a:not(.btn), .ground-deep a:not(.btn) { color: var(--on-sapphire); }
+.ground-sapphire .eyebrow, .ground-deep .eyebrow { color: var(--gold); }
+
+/* Type roles ------------------------------------------------------------- */
+
 .eyebrow {
-  font-size: 0.78rem; letter-spacing: 0.14em; text-transform: uppercase;
-  color: var(--accent); font-weight: 700;
+  font-size: 0.72rem;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--gold-ink);
+  font-weight: 600;
+  margin: 0;
 }
+
+/* Photographer credit. Beka asked for this on every image, so it is a real
+   type role rather than fine print. */
+.credit {
+  font-size: 0.7rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin: 0;
+  padding-top: 0.55rem;
+}
+.ground-sapphire .credit, .ground-deep .credit { color: var(--on-sapphire-soft); }
+
+.lede { font-size: clamp(1.15rem, 2vw, 1.4rem); line-height: 1.55; color: var(--ink-soft); }
+
+/* Set against photography, at scale, in the italic Young Serif does not have. */
+.script {
+  font-family: var(--body);
+  font-style: italic;
+  font-weight: 300;
+  letter-spacing: -0.02em;
+  line-height: 0.95;
+}
+
+/* Controls --------------------------------------------------------------- */
+
 .btn {
-  display: inline-block; background: var(--accent); color: #fff;
-  padding: 0.8rem 1.6rem; border-radius: 2px; text-decoration: none;
-  font-weight: 700; letter-spacing: 0.02em;
+  display: inline-block;
+  background: var(--sapphire);
+  color: var(--cream);
+  padding: 0.9rem 1.9rem;
+  border: 0;
+  border-radius: var(--r-pill);
+  text-decoration: none;
+  font-family: var(--body);
+  font-size: 0.9rem;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: background 0.18s ease, transform 0.18s ease;
 }
-.btn:hover { background: #263f68; }
-.wrap { max-width: 72rem; margin-inline: auto; padding-inline: var(--s3); }
+.btn:hover { background: var(--sapphire-mid); transform: translateY(-1px); }
+
+.btn-light { background: var(--cream); color: var(--sapphire); }
+.btn-light:hover { background: #fff; }
+
+/* A gold hairline. Used to open sections, never as decoration on its own. */
+.rule {
+  width: 3.5rem;
+  height: 2px;
+  background: var(--gold);
+  border: 0;
+  margin: 0;
+}
+
 @media (prefers-reduced-motion: reduce) {
-  *, *::before, *::after { transition: none !important; animation: none !important; }
+  *, *::before, *::after {
+    transition: none !important;
+    animation: none !important;
+    scroll-behavior: auto !important;
+  }
 }

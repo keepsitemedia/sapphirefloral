@@ -2,19 +2,15 @@
 import { SITE } from '../data/site';
 const year = new Date().getFullYear();
 ---
-<footer>
+<footer class="ground-deep">
   <div class="wrap cols">
-    <div>
-      <p class="eyebrow">Studio</p>
-      <p>Based in {SITE.base}, traveling to {SITE.cities.slice(1).join(', ')} and beyond.</p>
-    </div>
-    <div>
-      <p class="eyebrow">Contact</p>
-      <p><a href={SITE.phoneHref}>{SITE.phone}</a><br /><a href={`mailto:${SITE.email}`}>{SITE.email}</a></p>
+    <div class="col-brand">
+      <p class="mark">Sapphire Stem</p>
+      <p class="tagline">Environmentally-conscious florals for Montana weddings and events.</p>
     </div>
     <div>
       <p class="eyebrow">Pages</p>
-      <ul class="sitelinks">
+      <ul class="links">
         <li><a href="/portfolio">Portfolio</a></li>
         <li><a href="/weddings">Weddings</a></li>
         <li><a href="/about">About</a></li>
@@ -22,19 +18,45 @@ const year = new Date().getFullYear();
       </ul>
     </div>
     <div>
+      <p class="eyebrow">Contact</p>
+      <ul class="links">
+        <li><a href={SITE.phoneHref}>{SITE.phone}</a></li>
+        <li><a href={`mailto:${SITE.email}`}>{SITE.email}</a></li>
+      </ul>
+    </div>
+    <div>
       <p class="eyebrow">Follow</p>
-      <p><a href={SITE.instagramUrl}>Instagram {SITE.instagram}</a><br /><a href={SITE.facebookUrl}>Facebook</a></p>
+      <ul class="links">
+        <li><a href={SITE.instagramUrl}>Instagram</a></li>
+        <li><a href={SITE.facebookUrl}>Facebook</a></li>
+      </ul>
     </div>
   </div>
-  <p class="wrap fine">© {SITE.name} {year} · Big Timber &amp; Southwest Montana</p>
+  <div class="wrap base">
+    <p>Based in {SITE.base}. Traveling to {SITE.cities.slice(1).join(', ')} and beyond.</p>
+    <p>© {SITE.name} {year}</p>
+  </div>
 </footer>
 <style>
-  footer { border-top: 1px solid var(--line); margin-top: var(--s6);
-    padding-block: var(--s4); background: var(--surface); }
-  .cols { display: grid; gap: var(--s3); grid-template-columns: repeat(auto-fit, minmax(14rem, 1fr)); }
-  /* Also the only navigation when JS is off: the header nav collapses to a
-     button-driven menu under 46rem. */
-  .sitelinks { list-style: none; margin: 0; padding: 0; }
-  .fine { color: var(--muted); font-size: 0.85rem; padding-top: var(--s4); max-width: none; }
-  footer a { color: var(--ink-soft); }
+  footer { margin-top: 0; padding-block: var(--s6) var(--s4); }
+  .cols {
+    display: grid; gap: var(--s4);
+    grid-template-columns: 1.6fr repeat(3, 1fr);
+    align-items: start;
+  }
+  .mark { font-family: var(--display); font-size: 1.7rem; letter-spacing: -0.02em; }
+  .tagline { color: var(--on-sapphire-soft); font-size: 0.95rem; padding-top: var(--s2); max-width: 26ch; }
+  .links { list-style: none; margin: 0; padding: var(--s2) 0 0; display: flex; flex-direction: column; gap: 0.45rem; }
+  .links a { color: var(--on-sapphire-soft); text-decoration: none; font-size: 0.92rem; }
+  .links a:hover { color: var(--on-sapphire); text-decoration: underline; }
+  .base {
+    display: flex; justify-content: space-between; flex-wrap: wrap; gap: var(--s2);
+    margin-top: var(--s5); padding-top: var(--s3);
+    border-top: 1px solid rgb(255 255 255 / 0.14);
+  }
+  .base p { color: var(--on-sapphire-soft); font-size: 0.8rem; max-width: none; }
+  @media (max-width: 52rem) {
+    .cols { grid-template-columns: 1fr 1fr; }
+    .col-brand { grid-column: 1 / -1; }
+  }
 </style>

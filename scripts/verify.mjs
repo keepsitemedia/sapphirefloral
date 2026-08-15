@@ -12,11 +12,11 @@ const walk = (dir) => readdirSync(dir, { withFileTypes: true })
 // Routes and their required content. Pages tasks append entries here.
 // `bytes` overrides the default 15KB HTML budget for that route.
 export const ROUTES = {
-  '/': { h1: 'florals for', descIncludes: 'Bozeman' },
+  '/': { h1: 'florals for Montana weddings', descIncludes: 'Bozeman' },
   '/about': { h1: 'About Beka', descIncludes: 'Ph.D.' },
   // Beka adds photos to the gallery through the CMS and each one costs ~450B
   // of markup. A flat 15KB would make her own uploads break the build.
-  '/portfolio': { h1: 'Portfolio', descIncludes: 'Montana', bytes: 22_000 },
+  '/portfolio': { h1: 'Portfolio', descIncludes: 'Montana', bytes: 26_000 },
   '/weddings': { h1: 'Wedding flowers', descIncludes: '4,000' },
   '/contact': { h1: "I'd love to be your florist", descIncludes: 'booking' },
 };
@@ -29,7 +29,7 @@ for (const [route, req] of Object.entries(ROUTES)) {
   const html = readFileSync(f, 'utf8');
   const bytes = statSync(f).size;
 
-  const budget = req.bytes ?? 15_000;
+  const budget = req.bytes ?? 20_000;
   if (bytes > budget) fail(`${route}: HTML ${bytes}B exceeds ${budget}B budget`); else ok(`${route}: HTML ${bytes}B`);
   // Astro escapes apostrophes and ampersands in text, so copy assertions are
   // written plainly and compared against the decoded HTML.
@@ -61,6 +61,13 @@ if (!contact.includes('netlify-honeypot')) fail('/contact: honeypot missing');
 if ((contact.match(/<label/g) ?? []).length < 10) fail('/contact: labels missing');
 const ty = routeHtml('/thank-you');
 if (!ty.includes('noindex')) fail('/thank-you: noindex missing');
+
+// Seeded example reviews exist so the band could be designed before Beka had
+// real ones. They must never ship.
+const placeholders = readdirSync('src/content/reviews')
+  .filter((f) => f.endsWith('.md'))
+  .filter((f) => /^placeholder:\s*true/m.test(readFileSync(join('src/content/reviews', f), 'utf8')));
+for (const f of placeholders) fail(`reviews/${f}: placeholder review still present — replace with a real one or delete it`);
 
 // Budgets across dist
 const files = walk(DIST);

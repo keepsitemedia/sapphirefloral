@@ -37,11 +37,20 @@ const budgets = ['Under $1,000', '$1,000–$2,500', '$2,500–$5,000', '$5,000�
   <button class="btn" type="submit">Send inquiry</button>
 </form>
 <style>
-  form { display: flex; flex-direction: column; gap: var(--s3); max-width: 44rem; }
-  label { display: flex; flex-direction: column; gap: 0.35rem; font-weight: 700; flex: 1; }
-  input, select, textarea { font: inherit; font-weight: 400; padding: 0.6rem 0.7rem;
-    border: 1px solid var(--line); border-radius: 2px; background: var(--surface); color: var(--ink); }
+  form { display: flex; flex-direction: column; gap: var(--s3); }
+  label {
+    display: flex; flex-direction: column; gap: 0.4rem; flex: 1;
+    font-size: 0.74rem; letter-spacing: 0.14em; text-transform: uppercase;
+    font-weight: 600; color: var(--ink-soft);
+  }
+  input, select, textarea {
+    font: inherit; font-size: 1rem; font-weight: 400; text-transform: none;
+    letter-spacing: normal; color: var(--ink);
+    padding: 0.75rem 0.85rem;
+    border: 1px solid var(--line); border-radius: var(--r1); background: var(--cream);
+  }
+  input:focus, select:focus, textarea:focus { border-color: var(--sapphire-mid); }
   .row { display: flex; gap: var(--s3); flex-wrap: wrap; }
   .hp { position: absolute; left: -9999px; }
-  button { border: 0; cursor: pointer; align-self: flex-start; }
+  button { align-self: flex-start; margin-top: var(--s2); }
 </style>

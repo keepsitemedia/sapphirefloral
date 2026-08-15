@@ -1,0 +1,68 @@
+---
+import { getCollection } from 'astro:content';
+const reviews = (await getCollection('reviews')).sort((a, b) => a.data.order - b.data.order);
+---
+{reviews.length > 0 && (
+  <section class="ground-deep band">
+    <div class="wrap">
+      <p class="eyebrow">In their words</p>
+      <div class="rail" role="list">
+        {reviews.map((r) => (
+          <blockquote role="listitem">
+            <p class="quote">{r.data.quote}</p>
+            <footer>
+              <span class="name">{r.data.name}</span>
+              {r.data.event && <span class="event">{r.data.event}</span>}
+            </footer>
+          </blockquote>
+        ))}
+      </div>
+    </div>
+  </section>
+)}
+<style>
+  .band { padding-block: var(--s6); }
+  /* Horizontal rail: scroll-snap carries it, so it works with no JS at all and
+     stays operable by keyboard and touch. No auto-advance — a band that moves
+     on its own steals the reader's place. */
+  .rail {
+    display: grid;
+    grid-auto-flow: column;
+    grid-auto-columns: min(34rem, 82%);
+    gap: var(--s4);
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    padding-block: var(--s4) var(--s3);
+    scrollbar-width: thin;
+    scrollbar-color: var(--sapphire-mid) transparent;
+  }
+  /* Each quote is a cream card floating on the sapphire band. The card carries
+     its own ground, so the type inside flips back to ink. */
+  blockquote {
+    margin: 0;
+    scroll-snap-align: start;
+    background: var(--surface);
+    color: var(--ink);
+    border-radius: var(--r2);
+    box-shadow: var(--shadow-float);
+    padding: var(--s4);
+    display: flex;
+    flex-direction: column;
+  }
+  .quote {
+    font-family: var(--display);
+    font-size: clamp(1.25rem, 2.2vw, 1.7rem);
+    line-height: 1.28;
+    letter-spacing: -0.01em;
+    color: var(--sapphire);
+    max-width: none;
+  }
+  .quote::before { content: '“'; color: var(--gold); }
+  .quote::after { content: '”'; color: var(--gold); }
+  footer { padding-top: var(--s3); margin-top: auto; display: flex; flex-direction: column; }
+  .name {
+    font-size: 0.82rem; letter-spacing: 0.18em; text-transform: uppercase;
+    font-weight: 600; color: var(--ink);
+  }
+  .event { font-size: 0.82rem; color: var(--muted); }
+</style>

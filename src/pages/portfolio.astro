@@ -7,45 +7,92 @@ const entries = (await getCollection('portfolio'))
   .sort((a, b) => a.data.order - b.data.order);
 ---
 <Base title="Wedding Floral Portfolio — Montana" description="Bouquets, arches, and installations by Sapphire Stem Floral Design. Featured on Montana Bride, with photography by Cinema by Alle and Kindzerski Photography.">
-  <section class="wrap">
+  <section class="wrap head">
+    <hr class="rule" />
     <p class="eyebrow">Featured on Montana Bride</p>
     <h1>Portfolio</h1>
-    <ul class="grid">
-      {entries.map((e) => (
-        <li>
-          <button class="tile">
-            <Image src={e.data.image} alt={e.data.alt} width={640} widths={[320, 640]} sizes="(max-width: 46rem) 50vw, 33vw" />
-          </button>
-          {e.data.credit && <p class="credit">{e.data.credit}</p>}
-        </li>
-      ))}
-    </ul>
-    <p class="credit">Photos by Kindzerski Photography, Cinema by Alle, John Scott Bly, and Job Greenall.</p>
   </section>
-  <dialog id="lightbox">
-    <button id="lb-close" autofocus>Close</button>
+
+  <section class="wrap gallery">
+    {entries.map((e) => (
+      <figure>
+        <button class="tile">
+          <Image src={e.data.image} alt={e.data.alt} width={900} widths={[450, 900]} sizes="(max-width: 52rem) 100vw, 32vw" />
+        </button>
+        <figcaption>
+          <span class="cap-title">{e.data.title}</span>
+          {e.data.credit && <span class="credit">{e.data.credit}</span>}
+        </figcaption>
+      </figure>
+    ))}
+  </section>
+
+  <p class="wrap allcredits">
+    Photography by Kindzerski Photography, Cinema by Alle, John Scott Bly, and Job Greenall.
+  </p>
+
+  <dialog id="lightbox" aria-label="Enlarged photo">
+    <button id="lb-close">Close</button>
     <div id="lb-body"></div>
   </dialog>
+
   <Cta />
 </Base>
+
 <style>
-  .grid { list-style: none; margin: 0; padding: var(--s3) 0; display: grid;
-    gap: var(--s2); grid-template-columns: repeat(3, 1fr); }
-  .tile { border: 0; padding: 0; background: none; cursor: zoom-in; display: block; width: 100%; }
-  .credit { font-size: 0.8rem; color: var(--muted); padding-top: 0.2rem; }
-  dialog { border: 0; padding: var(--s2); max-width: min(64rem, 92vw); background: var(--surface); }
-  dialog::backdrop { background: rgb(20 25 30 / 0.85); }
-  #lb-close { float: right; border: 1px solid var(--line); background: none;
-    padding: 0.3rem 0.8rem; cursor: pointer; font: inherit; }
-  @media (max-width: 46rem) { .grid { grid-template-columns: repeat(2, 1fr); } }
+  .head { padding-block: var(--s5) var(--s5); display: flex; flex-direction: column; gap: var(--s3); }
+
+  /* Masonry-ish columns keep every photographer's aspect ratio intact — no
+     crop means no argument about whose framing wins. */
+  .gallery { columns: 3; column-gap: var(--s3); }
+  figure { margin: 0 0 var(--s4); break-inside: avoid; }
+  .tile {
+    border: 0; padding: 0; background: none; cursor: zoom-in; display: block; width: 100%;
+    border-radius: var(--r3);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+  }
+  .tile :global(img) { border-radius: var(--r3); }
+  .tile:hover { transform: translateY(-3px); box-shadow: var(--shadow-float); }
+  figcaption { display: flex; flex-direction: column; padding-top: 0.6rem; }
+  .cap-title {
+    font-size: 0.9rem; color: var(--ink); font-weight: 500;
+  }
+  .credit { padding-top: 0.15rem; }
+
+  .allcredits {
+    color: var(--muted); font-size: 0.8rem; max-width: none;
+    padding-block: var(--s3) var(--s6); border-top: 1px solid var(--line);
+    margin-top: var(--s3);
+  }
+
+  dialog {
+    border: 0; padding: var(--s2); background: var(--cream);
+    border-radius: var(--r2);
+    max-width: min(70rem, 94vw); max-height: 94vh;
+  }
+  dialog::backdrop { background: rgb(14 34 66 / 0.9); }
+  #lb-close {
+    float: right; border: 1px solid var(--line); background: var(--surface);
+    border-radius: var(--r-pill); padding: 0.4rem 1rem; cursor: pointer;
+    font: inherit; font-size: 0.72rem; letter-spacing: 0.16em; text-transform: uppercase;
+    margin-bottom: var(--s2);
+  }
+  #lb-body :global(img) {
+    max-height: 82vh; width: auto; margin-inline: auto;
+    border-radius: var(--r1);
+  }
+
+  @media (max-width: 60rem) { .gallery { columns: 2; } }
+  @media (max-width: 40rem) { .gallery { columns: 1; } }
 </style>
+
 <script>
   const dlg = document.getElementById('lightbox') as HTMLDialogElement;
   const body = document.getElementById('lb-body')!;
   document.querySelectorAll<HTMLButtonElement>('.tile').forEach((btn) => {
     btn.addEventListener('click', () => {
       const img = btn.querySelector('img')!.cloneNode(true) as HTMLImageElement;
-      img.sizes = '92vw';
+      img.sizes = '94vw';
       body.replaceChildren(img);
       dlg.showModal();
     });

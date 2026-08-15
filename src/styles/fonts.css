@@ -1,21 +1,33 @@
-/* Latin subset only. Fontsource's own css entrypoints ship latin-ext and
-   vietnamese too, which blows the 2-4 font-file budget in scripts/verify.mjs.
-   Every glyph the copy uses (including the ʻokina in "Hawaiʻi", U+02BB) is in
-   this range. */
+/* Latin subset only — Fontsource's own entrypoints ship latin-ext and more,
+   which blows the font-file budget in scripts/verify.mjs. Every glyph the copy
+   uses, including the ʻokina in "Hawaiʻi" (U+02BB), is in this range. */
+
+/* Display. Young Serif ships a single weight, which is the point: it is set
+   large or not at all. */
 @font-face {
-  font-family: 'Fraunces Variable';
+  font-family: 'Young Serif';
   font-style: normal;
   font-display: swap;
-  font-weight: 100 900;
-  src: url('../../node_modules/@fontsource-variable/fraunces/files/fraunces-latin-wght-normal.woff2') format('woff2-variations');
+  font-weight: 400;
+  src: url('../../node_modules/@fontsource/young-serif/files/young-serif-latin-400-normal.woff2') format('woff2');
   unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
 }
 
 @font-face {
-  font-family: 'Karla Variable';
+  font-family: 'Albert Sans Variable';
   font-style: normal;
   font-display: swap;
-  font-weight: 200 800;
-  src: url('../../node_modules/@fontsource-variable/karla/files/karla-latin-wght-normal.woff2') format('woff2-variations');
+  font-weight: 100 900;
+  src: url('../../node_modules/@fontsource-variable/albert-sans/files/albert-sans-latin-wght-normal.woff2') format('woff2-variations');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
+/* Italic carries the overlapping-headline moments; Young Serif has no italic. */
+@font-face {
+  font-family: 'Albert Sans Variable';
+  font-style: italic;
+  font-display: swap;
+  font-weight: 100 900;
+  src: url('../../node_modules/@fontsource-variable/albert-sans/files/albert-sans-latin-wght-italic.woff2') format('woff2-variations');
   unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
 }

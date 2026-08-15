@@ -1,31 +1,58 @@
 ---
 import { getEntry } from 'astro:content';
 const menu = await getEntry('alacarte', 'alacarte');
-const groups = ['personals', 'ceremony', 'reception'] as const;
+const groups = [
+  ['personals', 'Bouquets & personals'],
+  ['ceremony', 'Ceremony'],
+  ['reception', 'Reception'],
+] as const;
 const fmt = (n: number) => `$${n.toLocaleString('en-US')}`;
 ---
+<div class="card">
 <table>
-  <caption class="eyebrow">À la carte menu — starting prices</caption>
-  {groups.map((g) => (
+  <caption>
+    <span class="eyebrow">À la carte menu</span>
+    <span class="note">Starting prices. $100 minimum, pick-up in Big Timber.</span>
+  </caption>
+  {groups.map(([key, label]) => (
     <tbody>
-      <tr><th class="group" colspan="2" scope="colgroup">{g}</th></tr>
-      {menu!.data.items.filter((i) => i.category === g)
+      <tr><th class="group" colspan="2" scope="colgroup">{label}</th></tr>
+      {menu!.data.items.filter((i) => i.category === key)
         .sort((a, b) => a.order - b.order)
         .map((i) => (
           <tr>
-            <th scope="row">{i.name}{i.note && <span class="note"> — {i.note}</span>}</th>
-            <td>Starting at {fmt(i.startingAt)}</td>
+            <th scope="row">{i.name}{i.note && <span class="itemnote"> — {i.note}</span>}</th>
+            <td>{fmt(i.startingAt)}</td>
           </tr>
         ))}
     </tbody>
   ))}
 </table>
+</div>
 <style>
+  .card {
+    background: var(--surface);
+    border-radius: var(--r2);
+    box-shadow: var(--shadow-card);
+    padding: var(--s4);
+  }
   table { width: 100%; border-collapse: collapse; }
-  caption { text-align: left; padding-block: var(--s2); }
-  th, td { text-align: left; padding: 0.55rem 0.4rem; border-bottom: 1px solid var(--line); font-weight: 400; }
-  td { text-align: right; font-variant-numeric: tabular-nums; white-space: nowrap; }
-  .group { font-family: var(--display); font-size: 1.15rem; color: var(--accent);
-    text-transform: capitalize; padding-top: var(--s3); }
-  .note { color: var(--muted); font-size: 0.9rem; }
+  caption { text-align: left; padding-bottom: var(--s3); }
+  caption .note { display: block; color: var(--muted); font-size: 0.9rem; padding-top: 0.4rem; }
+  th, td {
+    text-align: left; padding: 0.7rem 0.2rem; font-weight: 400;
+    border-bottom: 1px solid var(--line);
+  }
+  td {
+    text-align: right; font-variant-numeric: tabular-nums; white-space: nowrap;
+    color: var(--sapphire); font-weight: 600;
+  }
+  .group {
+    font-family: var(--display); font-size: 1.35rem; color: var(--ink);
+    padding-top: var(--s4); border-bottom-color: var(--gold);
+  }
+  tbody:first-of-type .group { padding-top: 0; }
+  /* The card edge closes the list; a rule there would read as a missing row. */
+  tbody:last-of-type tr:last-child :is(th, td) { border-bottom: 0; }
+  .itemnote { color: var(--muted); font-size: 0.9rem; }
 </style>

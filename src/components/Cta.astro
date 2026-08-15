@@ -1,13 +1,21 @@
 ---
-interface Props { heading?: string }
-const { heading = "Let's design your day" } = Astro.props;
+interface Props { heading?: string; body?: string }
+const {
+  heading = 'Let’s design your day',
+  body = 'Tell me about your wedding or event. I’d love to be your florist.',
+} = Astro.props;
 ---
-<section class="wrap cta">
-  <h2>{heading}</h2>
-  <p>Tell me about your wedding or event — I'd love to be your florist.</p>
-  <a class="btn" href="/contact">Start an inquiry</a>
+<section class="ground-sapphire cta">
+  <div class="wrap inner">
+    <hr class="rule" />
+    <h2>{heading}</h2>
+    <p>{body}</p>
+    <a class="btn btn-light" href="/contact">Start an inquiry</a>
+  </div>
 </section>
 <style>
-  .cta { text-align: center; padding-block: var(--s5);
-    display: flex; flex-direction: column; align-items: center; gap: var(--s3); }
+  .cta { padding-block: var(--s6); }
+  .inner { display: flex; flex-direction: column; align-items: flex-start; gap: var(--s3); }
+  .inner p { color: var(--on-sapphire-soft); font-size: 1.1rem; }
+  .inner .btn { margin-top: var(--s2); }
 </style>

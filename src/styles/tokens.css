@@ -1,19 +1,57 @@
+/* Sapphire Stem design tokens.
+   Sapphire leads. Wedding-floral sites are near-universally blush-and-sage;
+   this one is named for a Montana gemstone, so the gemstone is the ground the
+   brand stands on, not an accent link colour. Cream and blush support it. */
 :root {
-  --ground: #faf9f6;
-  --surface: #ffffff;
-  --ink: #21272b;
-  --ink-soft: #4c565c;
-  --muted: #77828a;
-  --line: #e3e1da;
-  --accent: #2f4d7e;      /* Yogo sapphire */
-  --accent-soft: #eaeef5;
-  --sage: #77835f;
-  --sage-soft: #eef0e8;
+  /* Ground */
+  --cream: #faf6ef;
+  --cream-deep: #f2ebdf;
+  --surface: #fffdf9;
 
-  --display: 'Fraunces Variable', Georgia, serif;
-  --body: 'Karla Variable', 'Segoe UI', system-ui, sans-serif;
+  /* Yogo sapphire, the Montana stone the business is named for */
+  --sapphire: #16325c;
+  --sapphire-deep: #0e2242;
+  --sapphire-mid: #2b5fa8;
+  --sapphire-tint: #dde5f0;
 
-  --s1: 0.5rem; --s2: 0.85rem; --s3: 1.35rem;
-  --s4: 2.2rem; --s5: 3.5rem; --s6: 5.5rem;
-  --measure: 62ch;
+  /* Supporting */
+  --blush: #efd9d2;
+  --sage: #6f7f5c;
+  --gold: #c08a2e;
+  --gold-ink: #7a5310; /* passes AA on cream; --gold is for rules only */
+
+  /* Text */
+  --ink: #1e1c1a;
+  --ink-soft: #57514a;
+  --muted: #766f66;
+  --line: #e2dacb;
+
+  /* On sapphire */
+  --on-sapphire: #f7f2e9;
+  --on-sapphire-soft: #bfcee4;
+
+  --display: 'Young Serif', Georgia, serif;
+  --body: 'Albert Sans Variable', 'Segoe UI', system-ui, sans-serif;
+
+  --s1: 0.5rem;
+  --s2: 0.85rem;
+  --s3: 1.35rem;
+  --s4: 2.2rem;
+  --s5: 3.5rem;
+  --s6: 5.5rem;
+  --s7: 8rem;
+  --measure: 60ch;
+  --gutter: clamp(1.15rem, 4vw, 3rem);
+
+  /* Shape. Three steps only — anything softer than --r3 starts reading as a
+     lozenge rather than a photograph. */
+  --r1: 0.55rem; /* fields, chips */
+  --r2: 1.1rem;  /* cards, tables */
+  --r3: 1.6rem;  /* images, panels */
+  --r-pill: 999px;
+
+  /* Shadows carry sapphire, not black. A neutral grey shadow on cream reads as
+     dirt; tinting it to the brand keeps the warmth. */
+  --shadow-card: 0 6px 20px -12px rgb(22 50 92 / 0.22);
+  --shadow-float: 0 22px 48px -22px rgb(22 50 92 / 0.38);
 }

@@ -3,50 +3,141 @@ import { getCollection, getEntry, render } from 'astro:content';
 import { Image } from 'astro:assets';
 import Base from '../layouts/Base.astro';
 import Cta from '../components/Cta.astro';
+import Reviews from '../components/Reviews.astro';
+import Figure from '../components/Figure.astro';
 import { SITE } from '../data/site';
-import hero from '../assets/site/hero.jpg';
+import hero from '../assets/site/hero-table.jpg';
 const home = await getEntry('pages', 'home');
 const { Content } = await render(home!);
 const featured = (await getCollection('portfolio', (e) => e.data.featured))
-  .sort((a, b) => a.data.order - b.data.order).slice(0, 6);
+  .sort((a, b) => a.data.order - b.data.order).slice(0, 5);
 ---
 <Base title={home!.data.seoTitle} description={home!.data.description}>
-  <section class="wrap hero">
-    <div class="hero-copy">
-      <p class="eyebrow">Wedding &amp; event florist · {SITE.base}</p>
-      <h1>Environmentally-conscious, artful, romantic, and fun florals for Montana.</h1>
-      <p>Serving {SITE.cities.join(', ')}, and everywhere in between.</p>
-      <a class="btn" href="/contact">Inquire about your date</a>
+  <section class="hero">
+    <div class="hero-media">
+      <Image src={hero} alt="Bride in a cream cowboy hat seated at a sweetheart table set with autumn flowers, fruit, and taper candles in a golden Montana grassland at sunset" width={1250} widths={[625, 1250]} sizes="(max-width: 60rem) 100vw, 94vw" loading="eager" />
     </div>
-    <Image src={hero} alt="Bride in a cream cowboy hat seated at a sweetheart table set with autumn flowers, fruit, and taper candles in a golden Montana grassland at sunset" width={880} widths={[440, 880]} sizes="(max-width: 46rem) 100vw, 50vw" loading="eager" />
+    <div class="hero-panel ground-sapphire">
+      <p class="eyebrow">Wedding &amp; event florist · {SITE.base}</p>
+      <h1>Wildly romantic florals for Montana weddings.</h1>
+      <p class="hero-lede">Environmentally-conscious, artful, romantic — and genuinely fun to plan.</p>
+      <a class="btn btn-light" href="/contact">Inquire about your date</a>
+    </div>
   </section>
 
-  <section class="wrap pillars"><Content /></section>
+  <section class="wrap pillars">
+    <hr class="rule" />
+    <Content />
+  </section>
 
-  <section class="wrap">
-    <h2>Recent work</h2>
-    <ul class="grid">
-      {featured.map((e) => (
-        <li>
-          <Image src={e.data.image} alt={e.data.alt} width={640} widths={[320, 640]} sizes="(max-width: 46rem) 50vw, 33vw" />
-        </li>
+  <Reviews />
+
+  <section class="work">
+    <div class="wrap work-head">
+      <div>
+        <hr class="rule" />
+        <h2>Recent work</h2>
+      </div>
+      <a class="work-link" href="/portfolio">See the full portfolio →</a>
+    </div>
+    <div class="wrap gallery">
+      {featured.map((e, i) => (
+        <div class={`cell cell-${i + 1}`}>
+          <Figure src={e.data.image} alt={e.data.alt} credit={e.data.credit}
+            width={900} widths={[450, 900]} sizes="(max-width: 52rem) 100vw, 45vw" />
+        </div>
       ))}
-    </ul>
-    <a href="/portfolio">See the full portfolio →</a>
+    </div>
   </section>
 
   <Cta />
 </Base>
+
 <style>
-  .hero { display: grid; gap: var(--s4); align-items: center;
-    grid-template-columns: 1fr 1fr; padding-block: var(--s5); }
-  .hero-copy { display: flex; flex-direction: column; gap: var(--s3); align-items: flex-start; }
-  .pillars :global(h2) { padding-block: var(--s4) var(--s2); }
-  .pillars :global(h3) { padding-block: var(--s3) var(--s1); color: var(--accent); }
-  .grid { list-style: none; margin: 0; padding: var(--s3) 0; display: grid;
-    gap: var(--s2); grid-template-columns: repeat(3, 1fr); }
-  @media (max-width: 46rem) {
-    .hero { grid-template-columns: 1fr; }
-    .grid { grid-template-columns: repeat(2, 1fr); }
+  /* Hero. The sapphire panel overlaps the photograph rather than sitting
+     beside it — type never lands on the image itself, so legibility holds at
+     every crop, but the composition still reads as one layered picture.
+     The photograph is cropped so the table sits right of centre, which leaves
+     the panel a bed of grass to land on instead of the florals. */
+  .hero {
+    position: relative;
+    display: grid;
+    max-width: 74rem;
+    margin-inline: auto;
+    padding-inline: var(--gutter);
+  }
+  .hero-media { grid-area: 1 / 1; }
+  .hero-media :global(img) {
+    width: 100%;
+    border-radius: var(--r3);
+  }
+  .hero-panel {
+    grid-area: 1 / 1;
+    align-self: end;
+    justify-self: start;
+    width: min(31rem, 88%);
+    margin: 0 0 calc(var(--s6) * -1) var(--s4);
+    padding: var(--s5) var(--s4) var(--s5);
+    border-radius: var(--r3);
+    box-shadow: var(--shadow-float);
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: var(--s3);
+  }
+  .hero-lede { color: var(--on-sapphire-soft); font-size: 1.1rem; }
+  .hero-panel .btn { margin-top: var(--s2); }
+
+  .pillars { padding-block: calc(var(--s6) + var(--s5)) var(--s6); }
+  .pillars :global(h2) { padding-block: var(--s3) var(--s4); max-width: 18ch; }
+  .pillars :global(h3) {
+    padding-block: var(--s4) var(--s2);
+    color: var(--sapphire);
+    border-top: 1px solid var(--line);
+    margin-top: var(--s3);
+  }
+  .pillars :global(p) { color: var(--ink-soft); }
+
+  .work { padding-block: var(--s6); }
+  .work-head {
+    display: flex; align-items: flex-end; justify-content: space-between;
+    gap: var(--s3); flex-wrap: wrap; padding-bottom: var(--s4);
+  }
+  .work-head h2 { padding-top: var(--s3); }
+  .work-link {
+    font-size: 0.78rem; letter-spacing: 0.16em; text-transform: uppercase;
+    font-weight: 600; text-decoration: none; border-bottom: 1px solid var(--gold);
+    padding-bottom: 0.3rem;
+  }
+
+  /* Deliberately uneven: a magazine spread, not a contact sheet. */
+  .gallery { display: grid; grid-template-columns: repeat(12, 1fr); gap: var(--s4) var(--s3); }
+  .cell-1 { grid-column: 1 / 8; }
+  .cell-2 { grid-column: 9 / 13; align-self: end; }
+  .cell-3 { grid-column: 1 / 5; }
+  .cell-4 { grid-column: 6 / 13; }
+  .cell-5 { grid-column: 3 / 10; }
+
+  @media (max-width: 60rem) {
+    .hero-media :global(img) { aspect-ratio: 3 / 2; object-fit: cover; }
+    /* The hero is still a grid overlay down to 52rem, so the panel has to stay
+       bounded: at full width it buries the table and every stem behind it. */
+    .hero-panel { width: min(26rem, 62%); }
+  }
+  @media (max-width: 52rem) {
+    /* Stacked, but the panel still rides up over the photograph's lower edge
+       so the two read as one floating object rather than two blocks. */
+    .hero { display: block; }
+    /* Narrow crops cut from the sides, so bias right to hold the table. */
+    .hero-media :global(img) { aspect-ratio: 4 / 5; object-position: 58% center; }
+    .hero-panel {
+      position: relative;
+      width: auto;
+      margin: calc(var(--s4) * -1) 0 0;
+      padding: var(--s4) var(--s3) var(--s5);
+    }
+    .pillars { padding-block: var(--s5); }
+    .gallery { grid-template-columns: 1fr; }
+    .cell-1, .cell-2, .cell-3, .cell-4, .cell-5 { grid-column: 1 / -1; }
   }
 </style>

@@ -7,11 +7,53 @@ const page = await getEntry('pages', 'contact');
 const { Content } = await render(page!);
 ---
 <Base title={page!.data.seoTitle} description={page!.data.description}>
-  <section class="wrap flow">
+  <section class="wrap head">
+    <hr class="rule" />
+    <p class="eyebrow">Now booking 2026 &amp; 2027</p>
     <h1>{page!.data.title}</h1>
-    <Content />
-    <InquiryForm />
-    <p>Or reach me directly: <a href={SITE.phoneHref}>{SITE.phone}</a> · <a href={`mailto:${SITE.email}`}>{SITE.email}</a> · <a href={SITE.instagramUrl}>Instagram</a></p>
+    <div class="intro"><Content /></div>
+  </section>
+
+  <section class="wrap layout">
+    <div class="form-col"><InquiryForm /></div>
+    <aside class="ground-sapphire aside">
+      <p class="eyebrow">Or reach me directly</p>
+      <ul>
+        <li><a href={SITE.phoneHref}>{SITE.phone}</a></li>
+        <li><a href={`mailto:${SITE.email}`}>{SITE.email}</a></li>
+        <li><a href={SITE.instagramUrl}>{SITE.instagram}</a></li>
+      </ul>
+      <p class="fine">I answer inquiries within a few days. If your date is close, call and say so.</p>
+    </aside>
   </section>
 </Base>
-<style>.flow { padding-block: var(--s5); display: flex; flex-direction: column; gap: var(--s4); }</style>
+
+<style>
+  .head { padding-block: var(--s5) var(--s4); display: flex; flex-direction: column; gap: var(--s3); }
+  .intro :global(p) { color: var(--ink-soft); font-size: 1.08rem; }
+
+  .layout {
+    display: grid; grid-template-columns: 1.5fr 1fr;
+    gap: var(--s5); align-items: start; padding-bottom: var(--s6);
+  }
+  /* Both columns are cards floating on the cream page, so the form reads as a
+     thing you fill in rather than loose fields on the background. */
+  .form-col {
+    background: var(--surface);
+    border-radius: var(--r2);
+    box-shadow: var(--shadow-card);
+    padding: var(--s4);
+  }
+  .aside {
+    padding: var(--s4); display: flex; flex-direction: column; gap: var(--s2);
+    border-radius: var(--r2); box-shadow: var(--shadow-float);
+  }
+  .aside ul { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 0.5rem; }
+  .aside a { color: var(--on-sapphire); text-decoration: none; font-size: 1.05rem; }
+  .aside a:hover { text-decoration: underline; }
+  .fine { color: var(--on-sapphire-soft); font-size: 0.88rem; padding-top: var(--s2); }
+
+  @media (max-width: 52rem) {
+    .layout { grid-template-columns: 1fr; gap: var(--s4); }
+  }
+</style>
